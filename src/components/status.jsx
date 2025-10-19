@@ -852,7 +852,9 @@ function Status({
       alert(unauthInteractionErrorMessage);
       return false;
     }
-    const emoji = reaction.startsWith(':') && reaction.endsWith(':')
+    const pleroma = supports('@pleroma/emoji-reactions') || supports('@akkoma/emoji-reactions')
+
+    const emoji = !pleroma && reaction.startsWith(':') && reaction.endsWith(':')
       ? reaction.slice(1, -1)
       : reaction;
 
@@ -862,11 +864,21 @@ function Status({
         ...status,
       };
       const reacts = (reactions ?? emojiReactions)
-      if  (!reacts?.some(r => r.name === emoji && r.me)) {
-        const newStatus = await masto.v1.statuses.$select(id).react.$select(emoji).create();
+      if (!reacts?.some(r => r.name === emoji && r.me)) {
+        let newStatus;
+        if (!pleroma) {
+          newStatus = await masto.v1.statuses.$select(id).react.$select(emoji).create();
+        } else {
+          newStatus = await masto.v1.pleroma.statuses.$select(id).reactions.$select(emoji).update();
+        }
         saveStatus(newStatus, instance);
       } else {
-        const newStatus = await masto.v1.statuses.$select(id).unreact.$select(emoji).create();
+        let newStatus;
+        if (!pleroma) {
+          newStatus = await masto.v1.statuses.$select(id).unreact.$select(emoji).create();
+        } else {
+          newStatus = await masto.v1.pleroma.statuses.$select(id).reactions.$select(emoji).remove();
+        }
         saveStatus(newStatus, instance);
       }
       return true;
