@@ -1,4 +1,4 @@
-name: Auto-create tag/release on every push to `production`
+name: Auto-create tag/release on every push to `synth.download`
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: production
+          ref: synth.download
       # - run: git tag "`date +%Y.%m.%d`.`git rev-parse --short HEAD`" $(git rev-parse HEAD)
       # - run: git push --tags
       - uses: actions/setup-node@v3
