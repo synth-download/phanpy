@@ -431,8 +431,11 @@ function Status({
     _pinned,
     // _filtered,
     // Non-Mastodon
+    reactions,
     emojiReactions,
   } = status;
+
+  const unifiedReactions = reactions ?? emojiReactions
 
   const [languageAutoDetected, setLanguageAutoDetected] = useState(null);
   useEffect(() => {
@@ -2715,9 +2718,9 @@ function Status({
                   </>
                 )}
               </div>
-              {!!emojiReactions?.length && (
+              {!!unifiedReactions?.length && (
                 <div class="emoji-reactions">
-                  {emojiReactions.map((emojiReaction) => {
+                  {unifiedReactions.map((emojiReaction) => {
                     const { name, count, me, url, staticUrl } = emojiReaction;
                     if (url) {
                       // Some servers return url and staticUrl
