@@ -93,12 +93,12 @@ function TextExpander({ onTrigger = null, ...props }, ref) {
 
         let html = '';
         results?.forEach(({ item: emoji }) => {
-          const { shortcode, url } = emoji;
+          const { shortcode, url, unicode } = emoji;
+          const src = url || unicode;
+          if (!src) return; // Skip if neither url nor unicode exist
           html += `
-            <li role="option" data-value="${encodeHTML(shortcode)}">
-              <img src="${encodeHTML(
-                url,
-              )}" width="16" height="16" alt="" loading="lazy" />
+            <li role="option" data-value="${url ? ':'+encodeHTML(shortcode)+':' : unicode}">
+              ${url ? `<img src="${encodeHTML(url)}" width="16" height="16" alt="" loading="lazy" />` : `<span>${unicode}</span>`}
               ${encodeHTML(shortcode)}
             </li>`;
         });
@@ -241,7 +241,7 @@ function TextExpander({ onTrigger = null, ...props }, ref) {
       const { value, more } = item.dataset;
 
       if (key === ':') {
-        e.detail.value = value ? `:${value}:` : '​'; // zero-width space
+        e.detail.value = value ? value : '​'; // zero-width space
         if (more) {
           // Prevent adding space after the above value
           e.detail.continue = true;

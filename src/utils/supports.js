@@ -24,7 +24,9 @@ const platformFeatures = {
   '@pixelfed/trending': containPixelfed,
   '@pixelfed/home-include-reblogs': containPixelfed,
   '@pixelfed/global-feed': containPixelfed,
+  '@pleroma/emoji-reactions': containPleroma,
   '@pleroma/local-visibility-post': containPleroma,
+  '@akkoma/emoji-reactions': containAkkoma,
   '@akkoma/local-visibility-post': containAkkoma,
 };
 
