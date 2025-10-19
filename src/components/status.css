@@ -2688,9 +2688,9 @@ a.card:is(:hover, :focus):visited {
 .shortcode-emoji {
   width: auto;
   min-width: 1.2em;
-  max-width: 100%;
+  max-width: 96cqw;
   height: 1.2em;
-  vertical-align: text-bottom;
+  vertical-align: sub;
   object-fit: contain;
   /* object-position: left; */
   dynamic-range-limit: standard; /* Disable HDR */
@@ -2707,6 +2707,17 @@ a.card:is(:hover, :focus):visited {
       transform: scale(1.25);
     }
   }
+}
+
+.emoji-reaction {
+  display: inline-flex;
+  align-items: end;
+  gap: 0.5ex;
+  
+  font-size: 1.5rem;
+}
+.emoji-reaction-count {
+  font-size: 1.0rem;
 }
 
 /* EDIT HISTORY */
