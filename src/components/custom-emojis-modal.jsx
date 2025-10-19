@@ -52,7 +52,7 @@ const CustomEmojiButton = memo(({ emoji, onClick, showCode }) => {
       onPointerEnter={addEdges}
       onFocus={addEdges}
     >
-      <picture>
+      {!emoji.unicode && (<picture>
         {!!emoji.staticUrl && (
           <source
             srcSet={emoji.staticUrl}
@@ -68,7 +68,8 @@ const CustomEmojiButton = memo(({ emoji, onClick, showCode }) => {
           loading="lazy"
           decoding="async"
         />
-      </picture>
+      </picture>)}
+      {emoji.unicode && (<span>{emoji.unicode}</span>)}
       {showCode && (
         <>
           {' '}
@@ -90,7 +91,7 @@ const CustomEmojisList = memo(({ emojis, onSelect }) => {
           key={emoji.shortcode}
           emoji={emoji}
           onClick={() => {
-            onSelect(`:${emoji.shortcode}:`);
+            onSelect(emoji.unicode ? emoji.unicode : `:${emoji.shortcode}:`);
           }}
         />
       ))}
@@ -141,24 +142,29 @@ function CustomEmojisModal({
   }, []);
 
   const customEmojisCatList = useMemo(() => {
-    // Group emojis by category
-    const emojisCat = {
-      '--recent--': recentlyUsedCustomEmojis.filter((emoji) =>
-        customEmojis.find((e) => e.shortcode === emoji.shortcode),
-      ),
-    };
+    const emojisCat = {};
+    const recent = recentlyUsedCustomEmojis.filter((emoji) =>
+      customEmojis.find((e) => e.shortcode === emoji.shortcode),
+    );
+    if (recent.length) {
+      emojisCat['--recent--'] = recent;
+    }
+    const unicodeCat = {};
+    const customCat = {};
     const othersCat = [];
     customEmojis.forEach((emoji) => {
       customEmojisList.current?.push?.(emoji);
+      const targetCat = emoji.unicode ? unicodeCat : customCat;
       if (!emoji.category) {
         othersCat.push(emoji);
         return;
       }
-      if (!emojisCat[emoji.category]) {
-        emojisCat[emoji.category] = [];
+      if (!targetCat[emoji.category]) {
+        targetCat[emoji.category] = [];
       }
-      emojisCat[emoji.category].push(emoji);
+      targetCat[emoji.category].push(emoji);
     });
+    Object.assign(emojisCat, unicodeCat, customCat);
     if (othersCat.length) {
       emojisCat['--others--'] = othersCat;
     }
@@ -286,7 +292,7 @@ function CustomEmojisModal({
             e.preventDefault();
             const emoji = matches[0];
             if (emoji) {
-              onSelectEmoji(`:${emoji.shortcode}:`);
+              onSelectEmoji(emoji.unicode ? emoji.unicode : `:${emoji.shortcode}:`);
             }
           }}
         >
@@ -312,7 +318,7 @@ function CustomEmojisModal({
                 <CustomEmojiButton
                   emoji={emoji}
                   onClick={() => {
-                    onSelectEmoji(`:${emoji.shortcode}:`);
+                    onSelectEmoji(emoji.unicode ? emoji.unicode : `:${emoji.shortcode}:`);
                   }}
                   showCode
                 />
