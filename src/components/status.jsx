@@ -54,6 +54,7 @@ import visibilityText from '../utils/visibility-text';
 
 import Avatar from './avatar';
 import CustomEmoji from './custom-emoji';
+import CustomEmojisModal from './custom-emojis-modal';
 import EmojiText from './emoji-text';
 import Icon from './icon';
 import LazyShazam from './lazy-shazam';
@@ -434,8 +435,6 @@ function Status({
     reactions,
     emojiReactions,
   } = status;
-
-  const unifiedReactions = reactions ?? emojiReactions
 
   const [languageAutoDetected, setLanguageAutoDetected] = useState(null);
   useEffect(() => {
@@ -847,6 +846,48 @@ function Status({
       states.statuses[sKey] = status;
       return false;
     }
+  };
+  const reactStatus = async (reaction) => {
+    if (!sameInstance || !authenticated) {
+      alert(unauthInteractionErrorMessage);
+      return false;
+    }
+    const emoji = reaction.startsWith(':') && reaction.endsWith(':')
+      ? reaction.slice(1, -1)
+      : reaction;
+
+    try {
+      // Optimistic
+      states.statuses[sKey] = {
+        ...status,
+      };
+      const reacts = (reactions ?? emojiReactions)
+      if  (!reacts?.some(r => r.name === emoji && r.me)) {
+        const newStatus = await masto.v1.statuses.$select(id).react.$select(emoji).create();
+        saveStatus(newStatus, instance);
+      } else {
+        const newStatus = await masto.v1.statuses.$select(id).unreact.$select(emoji).create();
+        saveStatus(newStatus, instance);
+      }
+      return true;
+    } catch (e) {
+      console.error(e);
+      // Revert optimistism
+      states.statuses[sKey] = status;
+      return false;
+    }
+  }
+  const reactStatusNotify = async (reaction) => {
+    try {
+      const done = await reactStatus(reaction);
+      if (!isSizeLarge && done) {
+        showToast(
+          reacts?.some(r => r.name === emoji && r.me)
+            ? t`Unreacted @${username || acct}'s post`
+            : t`Reacted @${username || acct}'s post`,
+        );
+      }
+    } catch (e) {}
   };
 
   const favouriteStatus = async () => {
@@ -1672,7 +1713,10 @@ function Status({
 
   const contextMenuRef = useRef();
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
+  const [showEmoji2Picker, setShowEmoji2Picker] = useState(false);
   const [contextMenuProps, setContextMenuProps] = useState({});
+
+  const lastFocusedEmojiFieldRef = useRef(null);
 
   const showContextMenu =
     allowContextMenu || (!isSizeLarge && !previewMode && !_deleted && !quoted);
@@ -2718,68 +2762,82 @@ function Status({
                   </>
                 )}
               </div>
-              {!!unifiedReactions?.length && (
-                <div class="emoji-reactions">
-                  {unifiedReactions.map((emojiReaction) => {
-                    const { name, count, me, url, staticUrl } = emojiReaction;
-                    if (url) {
-                      // Some servers return url and staticUrl
+
+              <div class="emoji-reactions">
+                <button
+                  type="button"
+                  class="toolbar-button"
+                  disabled={false}
+                  onClick={() => {
+                    setShowEmoji2Picker({
+                      targetElement: lastFocusedEmojiFieldRef,
+                    });
+                  }}
+                >
+                  <Icon icon="emoji2" alt={_(msg`Add custom emoji`)} />
+                </button>
+                {!!(reactions ?? emojiReactions)?.length && (reactions ?? emojiReactions).map((emojiReaction) => {
+                  const { name, count, me, url, staticUrl } = emojiReaction;
+                  if (url) {
+                    // Some servers return url and staticUrl
+                    return (
+                      <button
+                        onClick={() => reactStatusNotify(name)}
+                        class={`emoji-reaction tag ${
+                          me ? '' : 'insignificant'
+                        }`}
+                      >
+                        <CustomEmoji
+                          alt={name}
+                          url={url}
+                          staticUrl={staticUrl}
+                        />
+                        <span className={'emoji-reaction-count'}>
+                          {count}
+                        </span>
+                      </button>
+                    );
+                  }
+                  const isShortCode = /^:.+?:$/.test(name);
+                  if (isShortCode) {
+                    const emoji = emojis.find(
+                      (e) =>
+                        e.shortcode ===
+                        name.replace(/^:/, '').replace(/:$/, ''),
+                    );
+                    if (emoji) {
                       return (
-                        <span
+                        <button
+                          onClick={() => reactStatusNotify(name)}
                           class={`emoji-reaction tag ${
                             me ? '' : 'insignificant'
                           }`}
                         >
                           <CustomEmoji
                             alt={name}
-                            url={url}
-                            staticUrl={staticUrl}
+                            url={emoji.url}
+                            staticUrl={emoji.staticUrl}
                           />
                           <span className={'emoji-reaction-count'}>
                             {count}
                           </span>
-                        </span>
+                        </button>
                       );
                     }
-                    const isShortCode = /^:.+?:$/.test(name);
-                    if (isShortCode) {
-                      const emoji = emojis.find(
-                        (e) =>
-                          e.shortcode ===
-                          name.replace(/^:/, '').replace(/:$/, ''),
-                      );
-                      if (emoji) {
-                        return (
-                          <span
-                            class={`emoji-reaction tag ${
-                              me ? '' : 'insignificant'
-                            }`}
-                          >
-                            <CustomEmoji
-                              alt={name}
-                              url={emoji.url}
-                              staticUrl={emoji.staticUrl}
-                            />
-                            <span className={'emoji-reaction-count'}>
-                              {count}
-                            </span>
-                          </span>
-                        );
-                      }
-                    }
-                    return (
-                      <span
-                        class={`emoji-reaction tag ${
-                          me ? '' : 'insignificant'
-                        }`}
-                      >
-                        <span className={'emoji-reaction-name'}>{name}</span>
-                        <span className={'emoji-reaction-count'}>{count}</span>
-                      </span>
-                    );
-                  })}
-                </div>
-              )}
+                  }
+                  return (
+                    <button
+                      onClick={() => reactStatusNotify(name)}
+                      class={`emoji-reaction tag ${
+                        me ? '' : 'insignificant'
+                      }`}
+                    >
+                      <span className={'emoji-reaction-name'}>{name}</span>
+                      <span className={'emoji-reaction-count'}>{count}</span>
+                    </button>
+                  );
+                })}
+              </div>
               <div class={`actions ${_deleted ? 'disabled' : ''}`}>
                 <div class="action has-count">
                   {tooManyMentions ? (
@@ -2949,6 +3007,24 @@ function Status({
             </>
           )}
         </div>
+        {showEmoji2Picker && (
+          <Modal
+            onClose={() => {
+              setShowEmoji2Picker(false);
+              //focusLastFocusedField();
+            }}
+          >
+            <CustomEmojisModal
+              masto={masto}
+              instance={instance}
+              onClose={() => {
+                setShowEmoji2Picker(false);
+              }}
+              defaultSearchTerm={showEmoji2Picker?.defaultSearchTerm}
+              onSelect={(emojiShortcode) => reactStatusNotify(emojiShortcode)}
+            />
+          </Modal>
+        )}
         {!!showEdited && (
           <Modal
             onClick={(e) => {
