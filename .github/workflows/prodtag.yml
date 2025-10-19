@@ -3,11 +3,11 @@ name: Auto-create tag/release on every push to `production`
 on:
   push:
     branches:
-      - production
+      - synth.download
 
 jobs:
   tag:
-    if: github.repository == 'cheeaun/phanpy'
+    if: github.repository == 'zenfyrdev/phanpy'
     runs-on: ubuntu-latest
     permissions:
       contents: write
