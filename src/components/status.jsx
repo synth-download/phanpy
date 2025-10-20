@@ -902,6 +902,35 @@ function Status({
     } catch (e) {}
   };
 
+  const enqueueStatus = async () => {
+    const postsIterator = masto.v1.scheduledStatuses
+      .list({ limit: 40 })
+      .values();
+
+    const scheduledStatuses = [];
+    let posts;
+    do {
+      const result = await postsIterator.next();
+      posts = result.value;
+      console.info(posts);
+      if (posts?.length) {
+        scheduledStatuses.push(...posts);
+      }
+    } while (posts?.length);
+
+    const scheduledReblogs = scheduledStatuses
+      .filter(status => status.params?.reblog)
+      .sort((a, b) => new Date(b.scheduledAt) - new Date(a.scheduledAt));
+
+    const baseTime = scheduledReblogs.length > 0
+      ? new Date(scheduledReblogs[0].scheduledAt)
+      : new Date();
+
+    const scheduledAt = new Date(baseTime.getTime() + 20 * 60 * 1000).toISOString();
+
+    return masto.v1.statuses.$select(id).reblog.create({scheduledAt});
+  };
+
   const favouriteStatus = async () => {
     if (!sameInstance || !authenticated) {
       alert(unauthInteractionErrorMessage);
@@ -1185,6 +1214,18 @@ function Status({
               className={`menu-reblog ${reblogged ? 'checked' : ''}`}
               menuExtras={
                 <>
+                  {canBoost &&
+                    <MenuItem
+                      disabled={!canBoost}
+                      onClick={() => {
+                        enqueueStatus();
+                        showToast(t`Enqueued a boost for @${username || acct}'s post`)
+                      }}
+                    >
+                        <Icon icon="schedule" />
+                        <span>{t`Queue`}</span>
+                    </MenuItem>
+                  }
                   {supportsNativeQuote() && (
                     <MenuItem
                       disabled={quoteDisabled}
@@ -2908,7 +2949,18 @@ function Status({
                       </>
                     }
                     menuExtras={
-                      <>
+                      <>{canBoost &&
+                          <MenuItem
+                            disabled={!canBoost}
+                            onClick={() => {
+                              enqueueStatus();
+                              showToast(t`Enqueued a boost for @${username || acct}'s post`)
+                            }}
+                          >
+                              <Icon icon="schedule" />
+                              <span>{t`Queue`}</span>
+                          </MenuItem>
+                        }
                         {supportsNativeQuote() && (
                           <MenuItem
                             disabled={quoteDisabled}
