@@ -58,7 +58,7 @@ quote = Someone quoted one of your statuses
 quoted_update = A status you have quoted has been edited
 */
 
-function emojiText({ account, emoji, emoji_url }) {
+function emojiText({ account, count, emoji, emoji_url }) {
   let url;
   let staticUrl;
   if (typeof emoji_url === 'string') {
@@ -67,6 +67,16 @@ function emojiText({ account, emoji, emoji_url }) {
     url = emoji_url?.url;
     staticUrl = emoji_url?.staticUrl;
   }
+
+  if (!emoji) {
+    return (
+      <Trans>
+        <b><span title={count}>{shortenNumber(count)}</span> people</b>{' '}
+        reacted to your post.
+      </Trans>
+    );
+  }
+
   const emojiObject = url ? (
     <CustomEmoji url={url} staticUrl={staticUrl} alt={emoji} />
   ) : (
@@ -273,7 +283,9 @@ const contentText = {
       <Trans>Moderation warning</Trans>
     </b>
   ),
-  reaction: ({account, reaction: { name, url, staticUrl }}) => emojiText({account, emoji: name, emoji_url: {url, staticUrl}}),
+  reaction: ({account, count, reaction: { name, url, staticUrl }}) => {
+    return emojiText({account, count, emoji: name, emoji_url: {url, staticUrl}})
+  },
   emoji_reaction: emojiText,
   'pleroma:emoji_reaction': emojiText,
   annual_report: ({ year }) => <Trans>Your {year} #Wrapstodon is here!</Trans>,
@@ -401,7 +413,7 @@ function Notification({
 
   if (typeof text === 'function') {
     const count =
-      (type === 'favourite' || type === 'reblog') && notificationsCount
+      (type === 'favourite' || type === 'reblog' || type === 'reaction') && notificationsCount
         ? diffCount
           ? notificationsCount
           : sampleAccounts?.length
@@ -420,10 +432,11 @@ function Notification({
       if (targetName) {
         text = text({ name: targetName });
       }
-    } else if (type === 'reaction' && notification.reaction) {
+    } else if (type === 'reaction') {
       text = text({
         account: <NameText account={account} showAvatar />,
-        reaction: notification.reaction
+        count: count,
+        reaction: notification.reaction ?? {}
       });
     } else if (
       (type === 'emoji_reaction' ||
@@ -626,7 +639,8 @@ function Notification({
             ))}
             {(type === 'favourite+reblog' ||
               type === 'favourite' ||
-              type === 'reblog') &&
+              type === 'reblog' ||
+              type === 'reaction') &&
             expandAccounts === 'remote' ? (
               <button
                 type="button"
@@ -678,7 +692,7 @@ function Notification({
                 }}
               >
                 +
-                {(type === 'favourite' || type === 'reblog') &&
+                {(type === 'favourite' || type === 'reblog' || type === 'reaction') &&
                   notificationsCount - _accounts.length}
                 <Icon icon="chevron-down" />
               </button>
