@@ -825,7 +825,7 @@ msgid "Rejected"
 msgstr "Odmítnuto"
 
 #: src/components/generic-accounts.jsx:154
-#: src/components/notification.jsx:471
+#: src/components/notification.jsx:475
 #: src/pages/accounts.jsx:50
 #: src/pages/search.jsx:335
 #: src/pages/search.jsx:368
@@ -1522,8 +1522,8 @@ msgid "Moderation warning"
 msgstr "Upozornění na moderování"
 
 #: src/components/notification.jsx:276
-msgid "{account} reacted to your post."
-msgstr ""
+#~ msgid "{account} reacted to your post."
+#~ msgstr ""
 
 #: src/components/notification.jsx:279
 msgid "Your {year} #Wrapstodon is here!"
@@ -1573,34 +1573,34 @@ msgstr "Váš účet byl pozastaven."
 msgid "[Unknown notification type: {type}]"
 msgstr "[Neznámý typ oznámení: {type}]"
 
-#: src/components/notification.jsx:467
+#: src/components/notification.jsx:471
 #: src/components/status.jsx:1298
 #: src/components/status.jsx:1308
 msgid "Boosted/Liked by…"
 msgstr "Boost/Líbilo se mi…"
 
-#: src/components/notification.jsx:468
+#: src/components/notification.jsx:472
 msgid "Liked by…"
 msgstr "Líbí se…"
 
-#: src/components/notification.jsx:469
+#: src/components/notification.jsx:473
 msgid "Boosted by…"
 msgstr "Boostováno…"
 
-#: src/components/notification.jsx:470
+#: src/components/notification.jsx:474
 msgid "Followed by…"
 msgstr "Sleduje…"
 
-#: src/components/notification.jsx:551
-#: src/components/notification.jsx:567
+#: src/components/notification.jsx:555
+#: src/components/notification.jsx:571
 msgid "Learn more <0/>"
 msgstr "Další informace <0/>"
 
-#: src/components/notification.jsx:576
+#: src/components/notification.jsx:580
 msgid "View #Wrapstodon"
 msgstr "Zobrazit #Wrapstodon"
 
-#: src/components/notification.jsx:817
+#: src/components/notification.jsx:821
 #: src/components/status.jsx:261
 msgid "Read more →"
 msgstr "Přečti si více →"
