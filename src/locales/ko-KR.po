@@ -825,7 +825,7 @@ msgid "Rejected"
 msgstr "거절함"
 
 #: src/components/generic-accounts.jsx:154
-#: src/components/notification.jsx:471
+#: src/components/notification.jsx:475
 #: src/pages/accounts.jsx:50
 #: src/pages/search.jsx:335
 #: src/pages/search.jsx:368
@@ -1522,8 +1522,8 @@ msgid "Moderation warning"
 msgstr "조정 경고"
 
 #: src/components/notification.jsx:276
-msgid "{account} reacted to your post."
-msgstr ""
+#~ msgid "{account} reacted to your post."
+#~ msgstr ""
 
 #: src/components/notification.jsx:279
 msgid "Your {year} #Wrapstodon is here!"
@@ -1573,34 +1573,34 @@ msgstr "계정이 정지되었습니다."
 msgid "[Unknown notification type: {type}]"
 msgstr "[알 수 없는 알림 유형: {type}]"
 
-#: src/components/notification.jsx:467
+#: src/components/notification.jsx:471
 #: src/components/status.jsx:1298
 #: src/components/status.jsx:1308
 msgid "Boosted/Liked by…"
 msgstr "부스트·좋아한 사용자…"
 
-#: src/components/notification.jsx:468
+#: src/components/notification.jsx:472
 msgid "Liked by…"
 msgstr "좋아한 사람:"
 
-#: src/components/notification.jsx:469
+#: src/components/notification.jsx:473
 msgid "Boosted by…"
 msgstr "부스트한 사람:"
 
-#: src/components/notification.jsx:470
+#: src/components/notification.jsx:474
 msgid "Followed by…"
 msgstr "팔로한 사람:"
 
-#: src/components/notification.jsx:551
-#: src/components/notification.jsx:567
+#: src/components/notification.jsx:555
+#: src/components/notification.jsx:571
 msgid "Learn more <0/>"
 msgstr "자세히 보기 <0/>"
 
-#: src/components/notification.jsx:576
+#: src/components/notification.jsx:580
 msgid "View #Wrapstodon"
 msgstr ""
 
-#: src/components/notification.jsx:817
+#: src/components/notification.jsx:821
 #: src/components/status.jsx:261
 msgid "Read more →"
 msgstr "더 보기 →"

@@ -273,7 +273,7 @@ const contentText = {
       <Trans>Moderation warning</Trans>
     </b>
   ),
-  reaction: ({ account }) => <Trans>{account} reacted to your post.</Trans>,
+  reaction: ({account, reaction: { name, url, staticUrl }}) => emojiText({account, emoji: name, emoji_url: {url, staticUrl}}),
   emoji_reaction: emojiText,
   'pleroma:emoji_reaction': emojiText,
   annual_report: ({ year }) => <Trans>Your {year} #Wrapstodon is here!</Trans>,
@@ -420,9 +420,13 @@ function Notification({
       if (targetName) {
         text = text({ name: targetName });
       }
+    } else if (type === 'reaction' && notification.reaction) {
+      text = text({
+        account: <NameText account={account} showAvatar />,
+        reaction: notification.reaction
+      });
     } else if (
-      (type === 'reaction' ||
-        type === 'emoji_reaction' ||
+      (type === 'emoji_reaction' ||
         type === 'pleroma:emoji_reaction') &&
       notification.emoji
     ) {
