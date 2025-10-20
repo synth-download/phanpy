@@ -28,17 +28,7 @@ async function _getCustomEmojis(instance, masto) {
   const emojis = await masto.v1.customEmojis.list();
   const visibleEmojis = emojis.filter((e) => e.visibleInPicker);
 
-  const emojiMap = new Map();
-
-  UNICODE_EMOJIS.forEach(emoji => {
-    emojiMap.set(emoji.shortcode, emoji);
-  });
-
-  visibleEmojis.forEach(emoji => {
-    emojiMap.set(emoji.shortcode, emoji);
-  });
-
-  const allEmojis = Array.from(emojiMap.values());
+  const allEmojis = [...UNICODE_EMOJIS, ...visibleEmojis];
 
   const searcher = new Fuse(allEmojis, {
     keys: ['shortcode'],
