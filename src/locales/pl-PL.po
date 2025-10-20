@@ -120,11 +120,11 @@ msgstr "Wpisy"
 #: src/components/media-attachment.jsx:397
 #: src/components/media-modal.jsx:363
 #: src/components/related-actions.jsx:238
-#: src/components/status.jsx:2148
-#: src/components/status.jsx:2165
-#: src/components/status.jsx:2301
-#: src/components/status.jsx:3008
-#: src/components/status.jsx:3011
+#: src/components/status.jsx:2189
+#: src/components/status.jsx:2206
+#: src/components/status.jsx:2342
+#: src/components/status.jsx:3060
+#: src/components/status.jsx:3063
 #: src/pages/account-statuses.jsx:544
 #: src/pages/accounts.jsx:118
 #: src/pages/hashtag.jsx:203
@@ -237,7 +237,7 @@ msgid "Original"
 msgstr "Oryginalne"
 
 #: src/components/account-info.jsx:1012
-#: src/components/status.jsx:2718
+#: src/components/status.jsx:2759
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1463
 #: src/pages/catchup.jsx:2106
@@ -294,8 +294,8 @@ msgstr "Pokaż statystyki wpisów"
 #: src/components/shortcuts-settings.jsx:230
 #: src/components/shortcuts-settings.jsx:583
 #: src/components/shortcuts-settings.jsx:783
-#: src/components/status.jsx:3270
-#: src/components/status.jsx:3482
+#: src/components/status.jsx:3322
+#: src/components/status.jsx:3534
 #: src/components/translated-bio-sheet.jsx:21
 #: src/pages/accounts.jsx:45
 #: src/pages/catchup.jsx:1600
@@ -421,7 +421,7 @@ msgid "Add media"
 msgstr "Dodaj media"
 
 #: src/components/compose.jsx:112
-#: src/components/status.jsx:2789
+#: src/components/status.jsx:2830
 msgid "Add custom emoji"
 msgstr "Dodaj własne emoji"
 
@@ -515,7 +515,7 @@ msgid "Attachment #{i} failed"
 msgstr "Załączenie #{i} nie powiodło się"
 
 #: src/components/compose.jsx:1418
-#: src/components/status.jsx:2485
+#: src/components/status.jsx:2526
 #: src/components/timeline.jsx:990
 msgid "Content warning"
 msgstr "Ostrzeżenie o zawartości"
@@ -594,7 +594,7 @@ msgid "Quiet public"
 msgstr "Ograniczona widoczność"
 
 #: src/components/compose.jsx:1921
-#: src/components/status.jsx:2365
+#: src/components/status.jsx:2406
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr "Prywatna wzmianka"
@@ -605,12 +605,12 @@ msgstr "Zaplanuj"
 
 #: src/components/compose.jsx:1975
 #: src/components/keyboard-shortcuts-help.jsx:164
-#: src/components/status.jsx:1112
-#: src/components/status.jsx:1146
-#: src/components/status.jsx:2124
-#: src/components/status.jsx:2125
-#: src/components/status.jsx:2865
-#: src/components/status.jsx:2877
+#: src/components/status.jsx:1141
+#: src/components/status.jsx:1175
+#: src/components/status.jsx:2165
+#: src/components/status.jsx:2166
+#: src/components/status.jsx:2906
+#: src/components/status.jsx:2918
 msgid "Reply"
 msgstr "Odpowiedz"
 
@@ -683,7 +683,7 @@ msgstr "Wystąpił błąd podczas usuwania szkicu! Spróbuj ponownie."
 
 #: src/components/drafts.jsx:126
 #: src/components/list-add-edit.jsx:188
-#: src/components/status.jsx:1654
+#: src/components/status.jsx:1695
 #: src/pages/filters.jsx:603
 #: src/pages/scheduled-posts.jsx:368
 msgid "Delete…"
@@ -825,7 +825,7 @@ msgid "Rejected"
 msgstr "Odrzucono"
 
 #: src/components/generic-accounts.jsx:154
-#: src/components/notification.jsx:475
+#: src/components/notification.jsx:488
 #: src/pages/accounts.jsx:50
 #: src/pages/search.jsx:335
 #: src/pages/search.jsx:368
@@ -1002,9 +1002,9 @@ msgid "<0>l</0> or <1>f</1>"
 msgstr "<0>l</0> or <1>f</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:185
-#: src/components/status.jsx:1182
-#: src/components/status.jsx:2907
-#: src/components/status.jsx:2962
+#: src/components/status.jsx:1211
+#: src/components/status.jsx:2948
+#: src/components/status.jsx:3014
 msgid "Boost"
 msgstr "Podbij"
 
@@ -1013,9 +1013,9 @@ msgid "<0>Shift</0> + <1>b</1>"
 msgstr "<0>Shift</0> + <1>b</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:197
-#: src/components/status.jsx:1284
-#: src/components/status.jsx:2987
-#: src/components/status.jsx:2988
+#: src/components/status.jsx:1325
+#: src/components/status.jsx:3039
+#: src/components/status.jsx:3040
 msgid "Bookmark"
 msgstr "Zakładka"
 
@@ -1106,14 +1106,14 @@ msgid "Media description"
 msgstr "Opis mediów"
 
 #: src/components/media-alt-modal.jsx:67
-#: src/components/status.jsx:1339
-#: src/components/status.jsx:1348
+#: src/components/status.jsx:1380
+#: src/components/status.jsx:1389
 #: src/components/translation-block.jsx:269
 msgid "Translate"
 msgstr "Przetłumacz"
 
 #: src/components/media-alt-modal.jsx:78
-#: src/components/status.jsx:1369
+#: src/components/status.jsx:1410
 msgid "Speak"
 msgstr "Powiedz"
 
@@ -1240,8 +1240,8 @@ msgstr "Odfiltrowano: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
 #: src/components/status-compact.jsx:70
-#: src/components/status.jsx:3408
-#: src/components/status.jsx:3486
+#: src/components/status.jsx:3460
+#: src/components/status.jsx:3538
 #: src/components/timeline.jsx:979
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1921
@@ -1446,174 +1446,179 @@ msgstr "To powiadomienie pochodzi z twojego innego konta."
 msgid "View all notifications"
 msgstr "Wyświetl wszystkie powiadomienia"
 
-#: src/components/notification.jsx:76
+#. placeholder {0}: shortenNumber(count)
+#: src/components/notification.jsx:73
+msgid "<0><1>{0}</1> people</0> reacted to your post."
+msgstr ""
+
+#: src/components/notification.jsx:86
 msgid "{account} reacted to your post with {emojiObject}"
 msgstr "{account} reaguje na twój wpis {emojiObject}"
 
-#: src/components/notification.jsx:83
+#: src/components/notification.jsx:93
 msgid "{account} published a post."
 msgstr "{account} publikuje wpis."
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
-#: src/components/notification.jsx:91
+#: src/components/notification.jsx:101
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
 msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} podbija twoją odpowiedź.} other {{account} podbija twój wpis.}}} few {{postType, select, reply {{account} podbija {postsCount} twoje odpowiedzi.} other {{account} podbija {postsCount} twoje wpisy.}}} other {{postType, select, reply {{account} podbija {postsCount} twoich odpowiedzi.} other {{account} podbija {postsCount} twoich wpisów.}}}}} few {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają twoją odpowiedź.} other {<0><1>{0}</1> osoby</0> podbijają twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają {postsCount} twoje odpowiedzi.} other {<0><1>{0}</1> osoby</0> podbijają {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają {postsCount} twoich odpowiedzi.} other {<0><1>{0}</1> osoby</0> podbijają {postsCount} twoich wpisów.}}}}} other {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osób</0> podbija twoją odpowiedź.} other {<0><1>{0}</1> osób</0> podbija twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osób</0> podbija {postsCount} twoje odpowiedzi.} other {<0><1>{0}</1> osób</0> podbija {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osób</0> podbija {postsCount} twoich odpowiedzi.} other {<0><1>{0}</1> osób</0> podbija {postsCount} twoich wpisów.}}}}}}"
 
 #. placeholder {0}: shortenNumber(count)
-#: src/components/notification.jsx:134
+#: src/components/notification.jsx:144
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
 msgstr "{count, plural, =1 {{account} obserwuje cię.} few {<0><1>{0}</1> osoby</0> obserwują cię.} other {<0><1>{0}</1> osób</0> obserwuje cię.}}"
 
-#: src/components/notification.jsx:148
+#: src/components/notification.jsx:158
 msgid "{account} requested to follow you."
 msgstr "{account} chce cię obserwować."
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
-#: src/components/notification.jsx:157
+#: src/components/notification.jsx:167
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
 msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} lubi twoją odpowiedź.} other {{account} lubi twój wpis.}}} few {{postType, select, reply {{account} lubi {postsCount} twoje odpowiedzi.} other {{account} lubi {postsCount} twoje wpisy.}}} other {{postType, select, reply {{account} lubi {postsCount} twoich odpowiedzi.} other {{account} lubi {postsCount} twoich wpisów.}}}}} few {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osoby</0> lubią twoją odpowiedź.} other {<0><1>{0}</1> osoby</0> lubi twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osoby</0> lubią {postsCount} twoje odpowiedzi.} other {<0><1>{0}</1> osoby</0> lubią {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osoby</0> lubią {postsCount} twoich odpowiedzi.} other {<0><1>{0}</1> osoby</0> lubią {postsCount} twoich wpisów.}}}}} other {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osób</0> lubi twoją odpowiedź.} other {<0><1>{0}</1> osób</0> lubi twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osób</0> lubi {postsCount} twoje odpowiedzi.} other {<0><1>{0}</1> osób</0> lubi {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osób</0> lubi {postsCount} twoich odpowiedzi.} other {<0><1>{0}</1> osób</0> lubi {postsCount} twoich wpisów.}}}}}}"
 
-#: src/components/notification.jsx:199
+#: src/components/notification.jsx:209
 msgid "A poll you have voted in or created has ended."
 msgstr "Zakończyła się ankieta utworzona przez ciebie lub w której został oddany twój głos."
 
-#: src/components/notification.jsx:200
+#: src/components/notification.jsx:210
 msgid "A poll you have created has ended."
 msgstr "Utworzona przez ciebie ankieta została zakończona."
 
-#: src/components/notification.jsx:201
+#: src/components/notification.jsx:211
 msgid "A poll you have voted in has ended."
 msgstr "Zakończyła się ankieta, w której został oddany twój głos."
 
-#: src/components/notification.jsx:204
+#: src/components/notification.jsx:214
 msgid "{account} edited a post."
 msgstr "Wpis wyedytowany przez {account}."
 
-#: src/components/notification.jsx:206
+#: src/components/notification.jsx:216
 msgid "A post you interacted with has been edited."
 msgstr "Wpis został wyedytowany już po twojej interakcji z nim."
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
-#: src/components/notification.jsx:215
+#: src/components/notification.jsx:225
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
 msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} podbija i lubi twoją odpowiedź.} other {{account} podbija i lubi twój wpis.}}} few {{postType, select, reply {{account} podbija i lubi twoje {postsCount} odpowiedzi.} other {{account} podbija i lubi twoje {postsCount} wpisy.}}} other {{postType, select, reply {{account} podbija i lubi {postsCount} twoich odpowiedzi.} other {{account} podbija i lubi twoje {postsCount} wpisów.}}}}} few {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają i lubią twoją odpowiedź.} other {<0><1>{0}</1> osoby</0> podbijają i lubią twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają i lubią twoje {postsCount} odpowiedzi.} other {<0><1>{0}</1> osoby</0> podbijają i lubią twoje {postsCount} wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają i lubią twoje {postsCount} odpowiedzi.} other {<0><1>{0}</1> osoby</0> podbijają i lubią twoje {postsCount} wpisów.}}}}} other {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osób</0> podbija i lubi twoją odpowiedź.} other {<0><1>{0}</1> osób</0> podbija i lubi twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osób</0> podbija i lubi twoje {postsCount} odpowiedzi.} other {<0><1>{0}</1> osób</0> podbija i lubi twoje {postsCount} wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osób</0> podbija i lubi twoje {postsCount} odpowiedzi.} other {<0><1>{0}</1> osób</0> podbija i lubi twoje {postsCount} wpisów.}}}}}}"
 
-#: src/components/notification.jsx:258
+#: src/components/notification.jsx:268
 msgid "{account} edited a post you have quoted."
 msgstr "Cytowany przez ciebie wpis został wyedytowany przez {account}."
 
-#: src/components/notification.jsx:260
+#: src/components/notification.jsx:270
 msgid "{account} signed up."
 msgstr "{account} rejestruje się."
 
-#: src/components/notification.jsx:262
+#: src/components/notification.jsx:272
 msgid "{account} reported {targetAccount}"
 msgstr "{account} zgłasza {targetAccount}"
-
-#: src/components/notification.jsx:267
-msgid "Lost connections with <0>{name}</0>."
-msgstr "Utracono połączenie z <0>{name}</0>."
-
-#: src/components/notification.jsx:273
-msgid "Moderation warning"
-msgstr "Ostrzeżenie"
 
 #: src/components/notification.jsx:276
 #~ msgid "{account} reacted to your post."
 #~ msgstr ""
 
-#: src/components/notification.jsx:279
+#: src/components/notification.jsx:277
+msgid "Lost connections with <0>{name}</0>."
+msgstr "Utracono połączenie z <0>{name}</0>."
+
+#: src/components/notification.jsx:283
+msgid "Moderation warning"
+msgstr "Ostrzeżenie"
+
+#: src/components/notification.jsx:291
 msgid "Your {year} #Wrapstodon is here!"
 msgstr "Twój #Wrapstodon {year} jest już dostępny!"
 
-#: src/components/notification.jsx:285
+#: src/components/notification.jsx:297
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
 msgstr "Administrator <0>{from}</0> zawiesza konto <1>{targetName}</1>, co oznacza, że nie możesz już otrzymywać aktualności ani wchodzić w interakcje z tą osobą."
 
-#: src/components/notification.jsx:291
+#: src/components/notification.jsx:303
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
 msgstr "Administrator <0>{from}</0> blokuje konto <1>{targetName}</1>. Obserwujący: {followersCount}, i obserwowani: {followingCount}, których to dotyczy."
 
-#: src/components/notification.jsx:297
+#: src/components/notification.jsx:309
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
 msgstr "Zablokowano <0>{targetName}</0>. Obserwujący: {followersCount}, i obserwowani: {followingCount}, których usunięto."
 
-#: src/components/notification.jsx:305
+#: src/components/notification.jsx:317
 msgid "Your account has received a moderation warning."
 msgstr "Twoje konto otrzymało ostrzeżenie."
 
-#: src/components/notification.jsx:306
+#: src/components/notification.jsx:318
 msgid "Your account has been disabled."
 msgstr "Twoje konto zostało wyłączone."
 
-#: src/components/notification.jsx:307
+#: src/components/notification.jsx:319
 msgid "Some of your posts have been marked as sensitive."
 msgstr "Niektóre twoje wpisy zostały oznaczone jako wrażliwe."
 
-#: src/components/notification.jsx:308
+#: src/components/notification.jsx:320
 msgid "Some of your posts have been deleted."
 msgstr "Niektóre twoje wpisy zostały usunięte."
 
-#: src/components/notification.jsx:309
+#: src/components/notification.jsx:321
 msgid "Your posts will be marked as sensitive from now on."
 msgstr "Twoje wpisy będą od teraz oznaczane jako wrażliwe."
 
-#: src/components/notification.jsx:310
+#: src/components/notification.jsx:322
 msgid "Your account has been limited."
 msgstr "Twoje konto zostało ograniczone."
 
-#: src/components/notification.jsx:311
+#: src/components/notification.jsx:323
 msgid "Your account has been suspended."
 msgstr "Twoje konto zostało zawieszone."
 
-#: src/components/notification.jsx:388
+#: src/components/notification.jsx:400
 msgid "[Unknown notification type: {type}]"
 msgstr "[Nieznany typ powiadomienia: {type}]"
 
-#: src/components/notification.jsx:471
-#: src/components/status.jsx:1298
-#: src/components/status.jsx:1308
+#: src/components/notification.jsx:484
+#: src/components/status.jsx:1339
+#: src/components/status.jsx:1349
 msgid "Boosted/Liked by…"
 msgstr "Podbite/polubione przez…"
 
-#: src/components/notification.jsx:472
+#: src/components/notification.jsx:485
 msgid "Liked by…"
 msgstr "Polubione przez…"
 
-#: src/components/notification.jsx:473
+#: src/components/notification.jsx:486
 msgid "Boosted by…"
 msgstr "Podbite przez…"
 
-#: src/components/notification.jsx:474
+#: src/components/notification.jsx:487
 msgid "Followed by…"
 msgstr "Obserwujący…"
 
-#: src/components/notification.jsx:555
-#: src/components/notification.jsx:571
+#: src/components/notification.jsx:568
+#: src/components/notification.jsx:584
 msgid "Learn more <0/>"
 msgstr "Dowiedz się więcej <0/>"
 
-#: src/components/notification.jsx:580
+#: src/components/notification.jsx:593
 msgid "View #Wrapstodon"
 msgstr "Wyświetl #Wrapstodon"
 
-#: src/components/notification.jsx:821
+#: src/components/notification.jsx:835
 #: src/components/status.jsx:261
 msgid "Read more →"
 msgstr "Więcej →"
 
 #: src/components/open-link-sheet.jsx:30
 #: src/components/related-actions.jsx:492
-#: src/components/status.jsx:1460
+#: src/components/status.jsx:1501
 msgid "Link copied"
 msgstr "Skopiowano odnośnik"
 
 #: src/components/open-link-sheet.jsx:33
 #: src/components/related-actions.jsx:495
-#: src/components/status.jsx:1463
+#: src/components/status.jsx:1504
 msgid "Unable to copy link"
 msgstr "Nie udało się skopiować odnośnika"
 
@@ -1625,13 +1630,13 @@ msgstr "Otworzyć link?"
 #: src/components/post-embed-modal.jsx:232
 #: src/components/related-actions.jsx:501
 #: src/components/shortcuts-settings.jsx:1059
-#: src/components/status.jsx:1469
+#: src/components/status.jsx:1510
 msgid "Copy"
 msgstr "Kopiuj"
 
 #: src/components/open-link-sheet.jsx:82
 #: src/components/related-actions.jsx:522
-#: src/components/status.jsx:1491
+#: src/components/status.jsx:1532
 msgid "Share…"
 msgstr "Udostępnij…"
 
@@ -1699,7 +1704,7 @@ msgid "Ending"
 msgstr "Koniec"
 
 #: src/components/post-embed-modal.jsx:201
-#: src/components/status.jsx:1504
+#: src/components/status.jsx:1545
 msgid "Embed post"
 msgstr "Zagnieźdź wpis"
 
@@ -1928,7 +1933,7 @@ msgstr "Pokaż wyróżnione profile"
 
 #: src/components/related-actions.jsx:516
 #: src/components/shortcuts-settings.jsx:1077
-#: src/components/status.jsx:1485
+#: src/components/status.jsx:1526
 msgid "Sharing doesn't seem to work."
 msgstr "Udostępnianie zdaje się nie działać."
 
@@ -2266,7 +2271,7 @@ msgid "Move down"
 msgstr "Przesuń w dół"
 
 #: src/components/shortcuts-settings.jsx:379
-#: src/components/status.jsx:1616
+#: src/components/status.jsx:1657
 #: src/pages/list.jsx:195
 msgid "Edit"
 msgstr "Edytuj"
@@ -2504,319 +2509,330 @@ msgid "Reacted @{0}'s post"
 msgstr ""
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:938
+#: src/components/status.jsx:967
 msgid "Unliked @{0}'s post"
 msgstr "Cofnięto polubienie wpisu @{0}"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:939
+#: src/components/status.jsx:968
 msgid "Liked @{0}'s post"
 msgstr "Polubiono wpis @{0}"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:978
+#: src/components/status.jsx:1007
 msgid "Unbookmarked @{0}'s post"
 msgstr "Usunięto z zakładek wpis od @{0}"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:979
+#: src/components/status.jsx:1008
 msgid "Bookmarked @{0}'s post"
 msgstr "Zapisano wpis @{0}"
 
-#: src/components/status.jsx:1083
+#: src/components/status.jsx:1112
 msgid "Some media have no descriptions."
 msgstr "Niektóre media nie mają opisu."
 
 #. placeholder {0}: rtf.format(-statusMonthsAgo, 'month')
-#: src/components/status.jsx:1090
+#: src/components/status.jsx:1119
 msgid "Old post (<0>{0}</0>)"
 msgstr "Stary wpis (<0>{0}</0>)"
 
-#: src/components/status.jsx:1111
+#: src/components/status.jsx:1140
 msgid "Reply…"
 msgstr ""
 
-#: src/components/status.jsx:1120
-#: src/components/status.jsx:1129
+#: src/components/status.jsx:1149
+#: src/components/status.jsx:1158
 msgid "Reply all"
 msgstr ""
 
-#: src/components/status.jsx:1123
+#: src/components/status.jsx:1152
 msgid "{mentionsCount, plural, other {# mentions}}"
 msgstr ""
 
 #. placeholder {0}: mentionsCount - 1
 #. placeholder {1}: username || acct
-#: src/components/status.jsx:1132
+#: src/components/status.jsx:1161
 msgid "{0, plural, other {<0>@{1}</0> first, # others below}}"
 msgstr ""
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1149
+#: src/components/status.jsx:1178
 msgid "Only <0>@{0}</0>"
 msgstr ""
 
-#: src/components/status.jsx:1182
-#: src/components/status.jsx:1259
-#: src/components/status.jsx:2907
-#: src/components/status.jsx:2960
+#: src/components/status.jsx:1211
+#: src/components/status.jsx:1300
+#: src/components/status.jsx:2948
+#: src/components/status.jsx:3012
 msgid "Unboost"
 msgstr "Cofnij podbicie"
 
-#: src/components/status.jsx:1221
-#: src/components/status.jsx:2945
+#. placeholder {0}: username || acct
+#: src/components/status.jsx:1222
+#: src/components/status.jsx:2957
+msgid "Enqueued a boost for @{0}'s post"
+msgstr ""
+
+#: src/components/status.jsx:1226
+#: src/components/status.jsx:2961
+msgid "Queue"
+msgstr ""
+
+#: src/components/status.jsx:1262
+#: src/components/status.jsx:2997
 msgid "Quote with link"
 msgstr "Cytuj z dodaniem odnośnika"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1238
-#: src/components/status.jsx:1808
+#: src/components/status.jsx:1279
+#: src/components/status.jsx:1849
 msgid "Unboosted @{0}'s post"
 msgstr "Cofnięto podbicie wpisu od @{0}"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1239
-#: src/components/status.jsx:1809
+#: src/components/status.jsx:1280
+#: src/components/status.jsx:1850
 msgid "Boosted @{0}'s post"
 msgstr "Podbito wpis od @{0}"
 
-#: src/components/status.jsx:1261
-#: src/components/status.jsx:2959
+#: src/components/status.jsx:1302
+#: src/components/status.jsx:3011
 msgid "Boost/Quote…"
 msgstr "Podbij/Cytuj"
 
-#: src/components/status.jsx:1262
-#: src/components/status.jsx:2959
+#: src/components/status.jsx:1303
+#: src/components/status.jsx:3011
 msgid "Boost…"
 msgstr "Podbij…"
 
-#: src/components/status.jsx:1274
-#: src/components/status.jsx:2138
-#: src/components/status.jsx:2975
+#: src/components/status.jsx:1315
+#: src/components/status.jsx:2179
+#: src/components/status.jsx:3027
 msgid "Unlike"
 msgstr "Cofnij polubienie"
 
-#: src/components/status.jsx:1275
-#: src/components/status.jsx:2138
-#: src/components/status.jsx:2139
-#: src/components/status.jsx:2975
-#: src/components/status.jsx:2976
+#: src/components/status.jsx:1316
+#: src/components/status.jsx:2179
+#: src/components/status.jsx:2180
+#: src/components/status.jsx:3027
+#: src/components/status.jsx:3028
 msgid "Like"
 msgstr "Polub"
 
-#: src/components/status.jsx:1284
-#: src/components/status.jsx:2987
+#: src/components/status.jsx:1325
+#: src/components/status.jsx:3039
 msgid "Unbookmark"
 msgstr "Usuń z zakładek"
 
-#: src/components/status.jsx:1319
+#: src/components/status.jsx:1360
 msgid "View Quotes"
 msgstr "Zobacz cytowania"
 
-#: src/components/status.jsx:1386
+#: src/components/status.jsx:1427
 msgid "Post text copied"
 msgstr "Tekst wpisu został skopiowany"
 
-#: src/components/status.jsx:1389
+#: src/components/status.jsx:1430
 msgid "Unable to copy post text"
 msgstr "Nie udało się skopiować tekstu wpisu"
 
-#: src/components/status.jsx:1395
+#: src/components/status.jsx:1436
 msgid "Copy post text"
 msgstr "Skopiuj tekst wpisu"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1413
+#: src/components/status.jsx:1454
 msgid "View post by <0>@{0}</0>"
 msgstr "Otwórz wpis <0>@{0}</0>"
 
-#: src/components/status.jsx:1434
+#: src/components/status.jsx:1475
 msgid "Show Edit History"
 msgstr "Pokaż historię edytowania"
 
-#: src/components/status.jsx:1437
+#: src/components/status.jsx:1478
 msgid "Edited: {editedDateText}"
 msgstr "Edytowano: {editedDateText}"
 
-#: src/components/status.jsx:1520
+#: src/components/status.jsx:1561
 msgid "Conversation unmuted"
 msgstr "Anulowano wyciszenie konwersacji"
 
-#: src/components/status.jsx:1520
+#: src/components/status.jsx:1561
 msgid "Conversation muted"
 msgstr "Konwersacja wyciszona"
 
-#: src/components/status.jsx:1526
+#: src/components/status.jsx:1567
 msgid "Unable to unmute conversation"
 msgstr "Nie udało się anulować wyciszenia konwersacji"
 
-#: src/components/status.jsx:1527
+#: src/components/status.jsx:1568
 msgid "Unable to mute conversation"
 msgstr "Nie udało się wyciszyć konwersacji"
 
-#: src/components/status.jsx:1536
+#: src/components/status.jsx:1577
 msgid "Unmute conversation"
 msgstr "Anuluj wyciszenie konwersacji"
 
-#: src/components/status.jsx:1543
+#: src/components/status.jsx:1584
 msgid "Mute conversation"
 msgstr "Wycisz konwersację"
 
-#: src/components/status.jsx:1559
+#: src/components/status.jsx:1600
 msgid "Post unpinned from profile"
 msgstr "Wpis został odpięty z profilu"
 
-#: src/components/status.jsx:1560
+#: src/components/status.jsx:1601
 msgid "Post pinned to profile"
 msgstr "Wpis przypięty do profilu"
 
-#: src/components/status.jsx:1565
+#: src/components/status.jsx:1606
 msgid "Unable to unpin post"
 msgstr "Nie udało się odpiąć wpisu"
 
-#: src/components/status.jsx:1565
+#: src/components/status.jsx:1606
 msgid "Unable to pin post"
 msgstr "Nie udało się przypiąć wpisu"
 
-#: src/components/status.jsx:1574
+#: src/components/status.jsx:1615
 msgid "Unpin from profile"
 msgstr "Odepnij z profilu"
 
-#: src/components/status.jsx:1581
+#: src/components/status.jsx:1622
 msgid "Pin to profile"
 msgstr "Przypnij do profilu"
 
-#: src/components/status.jsx:1594
+#: src/components/status.jsx:1635
 #: src/pages/settings.jsx:338
 msgid "Quote settings"
 msgstr "Ustawienia cytowania"
 
-#: src/components/status.jsx:1627
+#: src/components/status.jsx:1668
 msgid "Delete this post?"
 msgstr "Skasować ten wpis?"
 
-#: src/components/status.jsx:1643
+#: src/components/status.jsx:1684
 msgid "Post deleted"
 msgstr "Wpis został skasowany"
 
-#: src/components/status.jsx:1646
+#: src/components/status.jsx:1687
 msgid "Unable to delete post"
 msgstr "Nie udało się usunąć wpisu"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1671
+#: src/components/status.jsx:1712
 msgid "Remove my post from <0>@{0}</0>'s post?"
 msgstr "Usunąć twój post z wpisu <0>@{0}</0>?"
 
-#: src/components/status.jsx:1692
+#: src/components/status.jsx:1733
 msgid "Quote removed"
 msgstr "Cytowanie zostało usunięte"
 
-#: src/components/status.jsx:1696
+#: src/components/status.jsx:1737
 msgid "Unable to remove quote"
 msgstr "Nie udało się usunąć cytowania"
 
-#: src/components/status.jsx:1702
+#: src/components/status.jsx:1743
 msgid "Remove quote…"
 msgstr "Usuń cytowanie…"
 
-#: src/components/status.jsx:1716
+#: src/components/status.jsx:1757
 msgid "Report post…"
 msgstr "Zgłoś wpis…"
 
-#: src/components/status.jsx:2139
-#: src/components/status.jsx:2175
-#: src/components/status.jsx:2976
+#: src/components/status.jsx:2180
+#: src/components/status.jsx:2216
+#: src/components/status.jsx:3028
 msgid "Liked"
 msgstr "Polubiono"
 
-#: src/components/status.jsx:2172
-#: src/components/status.jsx:2962
+#: src/components/status.jsx:2213
+#: src/components/status.jsx:3014
 msgid "Boosted"
 msgstr "Podbito"
 
-#: src/components/status.jsx:2182
-#: src/components/status.jsx:2988
+#: src/components/status.jsx:2223
+#: src/components/status.jsx:3040
 msgid "Bookmarked"
 msgstr "Zapisano"
 
-#: src/components/status.jsx:2186
+#: src/components/status.jsx:2227
 msgid "Pinned"
 msgstr "Przypięto"
 
-#: src/components/status.jsx:2243
-#: src/components/status.jsx:2726
+#: src/components/status.jsx:2284
+#: src/components/status.jsx:2767
 msgid "Deleted"
 msgstr "Usunięto"
 
-#: src/components/status.jsx:2284
+#: src/components/status.jsx:2325
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
 msgstr "{repliesCount, plural, one {# odpowiedź} few {# odpowiedzi} other {# odpowiedzi}}"
 
-#: src/components/status.jsx:2448
-#: src/components/status.jsx:2510
-#: src/components/status.jsx:2616
+#: src/components/status.jsx:2489
+#: src/components/status.jsx:2551
+#: src/components/status.jsx:2657
 msgid "Show less"
 msgstr "Pokaż mniej"
 
-#: src/components/status.jsx:2448
-#: src/components/status.jsx:2510
+#: src/components/status.jsx:2489
+#: src/components/status.jsx:2551
 msgid "Show content"
 msgstr "Pokaż zawartość"
 
 #. placeholder {0}: filterInfo.titlesStr
 #. placeholder {0}: filterInfo?.titlesStr
-#: src/components/status.jsx:2612
+#: src/components/status.jsx:2653
 #: src/pages/catchup.jsx:1920
 msgid "Filtered: {0}"
 msgstr "Odfiltrowano: {0}"
 
-#: src/components/status.jsx:2616
+#: src/components/status.jsx:2657
 msgid "Show media"
 msgstr "Pokaż multimedia"
 
-#: src/components/status.jsx:2761
+#: src/components/status.jsx:2802
 msgid "Edited"
 msgstr "Edytowano"
 
-#: src/components/status.jsx:2866
-#: src/components/status.jsx:2878
+#: src/components/status.jsx:2907
+#: src/components/status.jsx:2919
 msgid "Comments"
 msgstr "Odpowiedzi"
 
-#: src/components/status.jsx:3146
+#: src/components/status.jsx:3198
 msgid "Post hidden by your filters"
 msgstr "Post ukryty przez Twoje filtry"
 
-#: src/components/status.jsx:3147
+#: src/components/status.jsx:3199
 msgid "Post pending"
 msgstr "Wpis oczekuje na publikację"
 
-#: src/components/status.jsx:3148
-#: src/components/status.jsx:3149
-#: src/components/status.jsx:3150
+#: src/components/status.jsx:3200
+#: src/components/status.jsx:3201
+#: src/components/status.jsx:3202
 msgid "Post unavailable"
 msgstr "Wpis jest niedostępny"
 
-#: src/components/status.jsx:3151
+#: src/components/status.jsx:3203
 msgid "Post removed by author"
 msgstr "Post został usunięty przez autora"
 
-#: src/components/status.jsx:3275
+#: src/components/status.jsx:3327
 msgid "Edit History"
 msgstr "Historia edytowania"
 
-#: src/components/status.jsx:3279
+#: src/components/status.jsx:3331
 msgid "Failed to load history"
 msgstr "Nie udało się wczytać historii"
 
-#: src/components/status.jsx:3284
+#: src/components/status.jsx:3336
 #: src/pages/annual-report.jsx:45
 msgid "Loading…"
 msgstr "Wczytywanie…"
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3416
+#: src/components/status.jsx:3468
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> podbija"
 
