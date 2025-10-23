@@ -1208,9 +1208,8 @@ function Status({
               className={`menu-reblog ${reblogged ? 'checked' : ''}`}
               menuExtras={
                 <>
-                  {canBoost &&
-                    <MenuItem
-                      disabled={!canBoost}
+                  {<MenuItem
+                      disabled={reblogged}
                       onClick={() => {
                         enqueueStatus();
                         showToast(t`Enqueued a boost for @${username || acct}'s post`)
@@ -2943,9 +2942,8 @@ function Status({
                       </>
                     }
                     menuExtras={
-                      <>{canBoost &&
-                          <MenuItem
-                            disabled={!canBoost}
+                      <>{<MenuItem
+                            disabled={reblogged}
                             onClick={() => {
                               enqueueStatus();
                               showToast(t`Enqueued a boost for @${username || acct}'s post`)
