@@ -2788,6 +2788,7 @@ function Status({
                     // Some servers return url and staticUrl
                     return (
                       <button
+                        disabled={name.includes('@')}
                         title={name}
                         onClick={() => reactStatusNotify(name)}
                         class={`emoji-reaction tag ${
@@ -2815,6 +2816,7 @@ function Status({
                     if (emoji) {
                       return (
                         <button
+                          disabled={name.includes('@')}
                           title={name}
                           onClick={() => reactStatusNotify(name)}
                           class={`emoji-reaction tag ${
