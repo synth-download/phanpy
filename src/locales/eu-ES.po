@@ -123,8 +123,8 @@ msgstr "bidalketa"
 #: src/components/status.jsx:2182
 #: src/components/status.jsx:2199
 #: src/components/status.jsx:2335
-#: src/components/status.jsx:3052
-#: src/components/status.jsx:3055
+#: src/components/status.jsx:3054
+#: src/components/status.jsx:3057
 #: src/pages/account-statuses.jsx:544
 #: src/pages/accounts.jsx:118
 #: src/pages/hashtag.jsx:203
@@ -294,8 +294,8 @@ msgstr "Ikusi bidalketen estatistikak"
 #: src/components/shortcuts-settings.jsx:230
 #: src/components/shortcuts-settings.jsx:583
 #: src/components/shortcuts-settings.jsx:783
-#: src/components/status.jsx:3314
-#: src/components/status.jsx:3526
+#: src/components/status.jsx:3316
+#: src/components/status.jsx:3528
 #: src/components/translated-bio-sheet.jsx:21
 #: src/pages/accounts.jsx:45
 #: src/pages/catchup.jsx:1600
@@ -609,8 +609,8 @@ msgstr "Programatu"
 #: src/components/status.jsx:1169
 #: src/components/status.jsx:2158
 #: src/components/status.jsx:2159
-#: src/components/status.jsx:2899
-#: src/components/status.jsx:2911
+#: src/components/status.jsx:2901
+#: src/components/status.jsx:2913
 msgid "Reply"
 msgstr "Erantzun"
 
@@ -1003,8 +1003,8 @@ msgstr "<0>l</0> edo <1>f</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:185
 #: src/components/status.jsx:1205
-#: src/components/status.jsx:2941
-#: src/components/status.jsx:3006
+#: src/components/status.jsx:2943
+#: src/components/status.jsx:3008
 msgid "Boost"
 msgstr "Bultzatu"
 
@@ -1014,8 +1014,8 @@ msgstr "<0>Shift</0> + <1>b</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:197
 #: src/components/status.jsx:1318
-#: src/components/status.jsx:3031
-#: src/components/status.jsx:3032
+#: src/components/status.jsx:3033
+#: src/components/status.jsx:3034
 msgid "Bookmark"
 msgstr "Jarri laster-marka"
 
@@ -1240,8 +1240,8 @@ msgstr "Iragazita: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
 #: src/components/status-compact.jsx:70
-#: src/components/status.jsx:3452
-#: src/components/status.jsx:3530
+#: src/components/status.jsx:3454
+#: src/components/status.jsx:3532
 #: src/components/timeline.jsx:979
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1921
@@ -2563,24 +2563,24 @@ msgstr ""
 
 #: src/components/status.jsx:1205
 #: src/components/status.jsx:1293
-#: src/components/status.jsx:2941
-#: src/components/status.jsx:3004
+#: src/components/status.jsx:2943
+#: src/components/status.jsx:3006
 msgid "Unboost"
 msgstr "Kendu bultzada"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1215
-#: src/components/status.jsx:2949
+#: src/components/status.jsx:2951
 msgid "Enqueued a boost for @{0}'s post"
 msgstr ""
 
 #: src/components/status.jsx:1219
-#: src/components/status.jsx:2953
+#: src/components/status.jsx:2955
 msgid "Queue"
 msgstr ""
 
 #: src/components/status.jsx:1255
-#: src/components/status.jsx:2989
+#: src/components/status.jsx:2991
 msgid "Quote with link"
 msgstr "Iruzkindu estekarekin"
 
@@ -2597,31 +2597,31 @@ msgid "Boosted @{0}'s post"
 msgstr "@{0}(r)en bidalketa bultzatu du"
 
 #: src/components/status.jsx:1295
-#: src/components/status.jsx:3003
+#: src/components/status.jsx:3005
 msgid "Boost/Quote…"
 msgstr "Bultzatu/Iruzkindu…"
 
 #: src/components/status.jsx:1296
-#: src/components/status.jsx:3003
+#: src/components/status.jsx:3005
 msgid "Boost…"
 msgstr "Bultzatu…"
 
 #: src/components/status.jsx:1308
 #: src/components/status.jsx:2172
-#: src/components/status.jsx:3019
+#: src/components/status.jsx:3021
 msgid "Unlike"
 msgstr "Utzi gogoko egiteari"
 
 #: src/components/status.jsx:1309
 #: src/components/status.jsx:2172
 #: src/components/status.jsx:2173
-#: src/components/status.jsx:3019
-#: src/components/status.jsx:3020
+#: src/components/status.jsx:3021
+#: src/components/status.jsx:3022
 msgid "Like"
 msgstr "Gogoko egin"
 
 #: src/components/status.jsx:1318
-#: src/components/status.jsx:3031
+#: src/components/status.jsx:3033
 msgid "Unbookmark"
 msgstr "Kendu laster-marka"
 
@@ -2742,17 +2742,17 @@ msgstr "Salatu bidalketa…"
 
 #: src/components/status.jsx:2173
 #: src/components/status.jsx:2209
-#: src/components/status.jsx:3020
+#: src/components/status.jsx:3022
 msgid "Liked"
 msgstr "Gogoko egina"
 
 #: src/components/status.jsx:2206
-#: src/components/status.jsx:3006
+#: src/components/status.jsx:3008
 msgid "Boosted"
 msgstr "Bultzatua"
 
 #: src/components/status.jsx:2216
-#: src/components/status.jsx:3032
+#: src/components/status.jsx:3034
 msgid "Bookmarked"
 msgstr "Laster-marka jarria"
 
@@ -2795,44 +2795,44 @@ msgstr "Erakutsi multimedia fitxategiak"
 msgid "Edited"
 msgstr "Editatuta"
 
-#: src/components/status.jsx:2900
-#: src/components/status.jsx:2912
+#: src/components/status.jsx:2902
+#: src/components/status.jsx:2914
 msgid "Comments"
 msgstr "Iruzkinak"
 
-#: src/components/status.jsx:3190
+#: src/components/status.jsx:3192
 msgid "Post hidden by your filters"
 msgstr "Iragazkiek ezkutatutako bidalketa"
 
-#: src/components/status.jsx:3191
+#: src/components/status.jsx:3193
 msgid "Post pending"
 msgstr "Bidalketa zain dago"
 
-#: src/components/status.jsx:3192
-#: src/components/status.jsx:3193
 #: src/components/status.jsx:3194
+#: src/components/status.jsx:3195
+#: src/components/status.jsx:3196
 msgid "Post unavailable"
 msgstr "Bidalketa ez dago eskuragarri"
 
-#: src/components/status.jsx:3195
+#: src/components/status.jsx:3197
 msgid "Post removed by author"
 msgstr "Egileak bidalketa kendu du"
 
-#: src/components/status.jsx:3319
+#: src/components/status.jsx:3321
 msgid "Edit History"
 msgstr "Edizio-historia"
 
-#: src/components/status.jsx:3323
+#: src/components/status.jsx:3325
 msgid "Failed to load history"
 msgstr "Ezin da historia kargatu"
 
-#: src/components/status.jsx:3328
+#: src/components/status.jsx:3330
 #: src/pages/annual-report.jsx:45
 msgid "Loading…"
 msgstr "Kargatzen…"
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3460
+#: src/components/status.jsx:3462
 msgid "<0/> <1/> boosted"
 msgstr "<0/>(e)k <1/> bultzatu du"
 
