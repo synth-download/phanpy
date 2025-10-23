@@ -8,6 +8,7 @@ export default function CustomEmoji({ staticUrl, alt, url }) {
         key={alt || url}
         src={url}
         alt={alt}
+        title={alt}
         class="shortcode-emoji emoji"
         loading="lazy"
         decoding="async"

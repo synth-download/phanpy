@@ -2828,6 +2828,7 @@ function Status({
                     // Some servers return url and staticUrl
                     return (
                       <button
+                        title={name}
                         onClick={() => reactStatusNotify(name)}
                         class={`emoji-reaction tag ${
                           me ? '' : 'insignificant'
@@ -2854,6 +2855,7 @@ function Status({
                     if (emoji) {
                       return (
                         <button
+                          title={name}
                           onClick={() => reactStatusNotify(name)}
                           class={`emoji-reaction tag ${
                             me ? '' : 'insignificant'
