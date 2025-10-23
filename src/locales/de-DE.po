@@ -123,8 +123,8 @@ msgstr "Beiträge"
 #: src/components/status.jsx:2182
 #: src/components/status.jsx:2199
 #: src/components/status.jsx:2335
-#: src/components/status.jsx:3054
-#: src/components/status.jsx:3057
+#: src/components/status.jsx:3056
+#: src/components/status.jsx:3059
 #: src/pages/account-statuses.jsx:544
 #: src/pages/accounts.jsx:118
 #: src/pages/hashtag.jsx:203
@@ -294,8 +294,8 @@ msgstr "Beitragsstatistiken anzeigen"
 #: src/components/shortcuts-settings.jsx:230
 #: src/components/shortcuts-settings.jsx:583
 #: src/components/shortcuts-settings.jsx:783
-#: src/components/status.jsx:3316
-#: src/components/status.jsx:3528
+#: src/components/status.jsx:3318
+#: src/components/status.jsx:3530
 #: src/components/translated-bio-sheet.jsx:21
 #: src/pages/accounts.jsx:45
 #: src/pages/catchup.jsx:1600
@@ -609,8 +609,8 @@ msgstr ""
 #: src/components/status.jsx:1169
 #: src/components/status.jsx:2158
 #: src/components/status.jsx:2159
-#: src/components/status.jsx:2901
-#: src/components/status.jsx:2913
+#: src/components/status.jsx:2903
+#: src/components/status.jsx:2915
 msgid "Reply"
 msgstr "Antworten"
 
@@ -1003,8 +1003,8 @@ msgstr "<0>l</0> oder <1>f</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:185
 #: src/components/status.jsx:1205
-#: src/components/status.jsx:2943
-#: src/components/status.jsx:3008
+#: src/components/status.jsx:2945
+#: src/components/status.jsx:3010
 msgid "Boost"
 msgstr "Boosten"
 
@@ -1014,8 +1014,8 @@ msgstr "<0>Umschalt</0> + <1>b</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:197
 #: src/components/status.jsx:1318
-#: src/components/status.jsx:3033
-#: src/components/status.jsx:3034
+#: src/components/status.jsx:3035
+#: src/components/status.jsx:3036
 msgid "Bookmark"
 msgstr "Lesezeichen"
 
@@ -1240,8 +1240,8 @@ msgstr "Gefiltert: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
 #: src/components/status-compact.jsx:70
-#: src/components/status.jsx:3454
-#: src/components/status.jsx:3532
+#: src/components/status.jsx:3456
+#: src/components/status.jsx:3534
 #: src/components/timeline.jsx:979
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1921
@@ -2563,24 +2563,24 @@ msgstr ""
 
 #: src/components/status.jsx:1205
 #: src/components/status.jsx:1293
-#: src/components/status.jsx:2943
-#: src/components/status.jsx:3006
+#: src/components/status.jsx:2945
+#: src/components/status.jsx:3008
 msgid "Unboost"
 msgstr "Nicht mehr teilen"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1215
-#: src/components/status.jsx:2951
+#: src/components/status.jsx:2953
 msgid "Enqueued a boost for @{0}'s post"
 msgstr ""
 
 #: src/components/status.jsx:1219
-#: src/components/status.jsx:2955
+#: src/components/status.jsx:2957
 msgid "Queue"
 msgstr ""
 
 #: src/components/status.jsx:1255
-#: src/components/status.jsx:2991
+#: src/components/status.jsx:2993
 msgid "Quote with link"
 msgstr "Mit Link zitieren"
 
@@ -2597,31 +2597,31 @@ msgid "Boosted @{0}'s post"
 msgstr ""
 
 #: src/components/status.jsx:1295
-#: src/components/status.jsx:3005
+#: src/components/status.jsx:3007
 msgid "Boost/Quote…"
 msgstr ""
 
 #: src/components/status.jsx:1296
-#: src/components/status.jsx:3005
+#: src/components/status.jsx:3007
 msgid "Boost…"
 msgstr "Boost…"
 
 #: src/components/status.jsx:1308
 #: src/components/status.jsx:2172
-#: src/components/status.jsx:3021
+#: src/components/status.jsx:3023
 msgid "Unlike"
 msgstr "Entfavorisieren"
 
 #: src/components/status.jsx:1309
 #: src/components/status.jsx:2172
 #: src/components/status.jsx:2173
-#: src/components/status.jsx:3021
-#: src/components/status.jsx:3022
+#: src/components/status.jsx:3023
+#: src/components/status.jsx:3024
 msgid "Like"
 msgstr "Favorisieren"
 
 #: src/components/status.jsx:1318
-#: src/components/status.jsx:3033
+#: src/components/status.jsx:3035
 msgid "Unbookmark"
 msgstr "Lesezeichen entfernen"
 
@@ -2742,17 +2742,17 @@ msgstr "Post melden…"
 
 #: src/components/status.jsx:2173
 #: src/components/status.jsx:2209
-#: src/components/status.jsx:3022
+#: src/components/status.jsx:3024
 msgid "Liked"
 msgstr "Favorisiert"
 
 #: src/components/status.jsx:2206
-#: src/components/status.jsx:3008
+#: src/components/status.jsx:3010
 msgid "Boosted"
 msgstr "Geboostet"
 
 #: src/components/status.jsx:2216
-#: src/components/status.jsx:3034
+#: src/components/status.jsx:3036
 msgid "Bookmarked"
 msgstr "Lesezeichen hinzugefügt"
 
@@ -2795,44 +2795,44 @@ msgstr "Medien anzeigen"
 msgid "Edited"
 msgstr "Bearbeitet"
 
-#: src/components/status.jsx:2902
-#: src/components/status.jsx:2914
+#: src/components/status.jsx:2904
+#: src/components/status.jsx:2916
 msgid "Comments"
 msgstr "Kommentare"
 
-#: src/components/status.jsx:3192
+#: src/components/status.jsx:3194
 msgid "Post hidden by your filters"
 msgstr ""
 
-#: src/components/status.jsx:3193
+#: src/components/status.jsx:3195
 msgid "Post pending"
 msgstr ""
 
-#: src/components/status.jsx:3194
-#: src/components/status.jsx:3195
 #: src/components/status.jsx:3196
+#: src/components/status.jsx:3197
+#: src/components/status.jsx:3198
 msgid "Post unavailable"
 msgstr ""
 
-#: src/components/status.jsx:3197
+#: src/components/status.jsx:3199
 msgid "Post removed by author"
 msgstr ""
 
-#: src/components/status.jsx:3321
+#: src/components/status.jsx:3323
 msgid "Edit History"
 msgstr "Bearbeitungsverlauf"
 
-#: src/components/status.jsx:3325
+#: src/components/status.jsx:3327
 msgid "Failed to load history"
 msgstr "Fehler beim laden des Verlaufs"
 
-#: src/components/status.jsx:3330
+#: src/components/status.jsx:3332
 #: src/pages/annual-report.jsx:45
 msgid "Loading…"
 msgstr "Laden…"
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3462
+#: src/components/status.jsx:3464
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> geteilt"
 

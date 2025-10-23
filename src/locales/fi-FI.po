@@ -123,8 +123,8 @@ msgstr "Julkaisut"
 #: src/components/status.jsx:2182
 #: src/components/status.jsx:2199
 #: src/components/status.jsx:2335
-#: src/components/status.jsx:3054
-#: src/components/status.jsx:3057
+#: src/components/status.jsx:3056
+#: src/components/status.jsx:3059
 #: src/pages/account-statuses.jsx:544
 #: src/pages/accounts.jsx:118
 #: src/pages/hashtag.jsx:203
@@ -294,8 +294,8 @@ msgstr "Näytä julkaisutilastot"
 #: src/components/shortcuts-settings.jsx:230
 #: src/components/shortcuts-settings.jsx:583
 #: src/components/shortcuts-settings.jsx:783
-#: src/components/status.jsx:3316
-#: src/components/status.jsx:3528
+#: src/components/status.jsx:3318
+#: src/components/status.jsx:3530
 #: src/components/translated-bio-sheet.jsx:21
 #: src/pages/accounts.jsx:45
 #: src/pages/catchup.jsx:1600
@@ -609,8 +609,8 @@ msgstr "Ajasta"
 #: src/components/status.jsx:1169
 #: src/components/status.jsx:2158
 #: src/components/status.jsx:2159
-#: src/components/status.jsx:2901
-#: src/components/status.jsx:2913
+#: src/components/status.jsx:2903
+#: src/components/status.jsx:2915
 msgid "Reply"
 msgstr "Vastaa"
 
@@ -1003,8 +1003,8 @@ msgstr "<0>l</0> tai <1>f</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:185
 #: src/components/status.jsx:1205
-#: src/components/status.jsx:2943
-#: src/components/status.jsx:3008
+#: src/components/status.jsx:2945
+#: src/components/status.jsx:3010
 msgid "Boost"
 msgstr "Tehosta"
 
@@ -1014,8 +1014,8 @@ msgstr "<0>Vaihto</0> + <1>b</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:197
 #: src/components/status.jsx:1318
-#: src/components/status.jsx:3033
-#: src/components/status.jsx:3034
+#: src/components/status.jsx:3035
+#: src/components/status.jsx:3036
 msgid "Bookmark"
 msgstr "Lisää kirjanmerkkeihin"
 
@@ -1240,8 +1240,8 @@ msgstr "Suodatettu: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
 #: src/components/status-compact.jsx:70
-#: src/components/status.jsx:3454
-#: src/components/status.jsx:3532
+#: src/components/status.jsx:3456
+#: src/components/status.jsx:3534
 #: src/components/timeline.jsx:979
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1921
@@ -2563,24 +2563,24 @@ msgstr "Vain <0>@{0}</0>"
 
 #: src/components/status.jsx:1205
 #: src/components/status.jsx:1293
-#: src/components/status.jsx:2943
-#: src/components/status.jsx:3006
+#: src/components/status.jsx:2945
+#: src/components/status.jsx:3008
 msgid "Unboost"
 msgstr "Kumoa tehostus"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1215
-#: src/components/status.jsx:2951
+#: src/components/status.jsx:2953
 msgid "Enqueued a boost for @{0}'s post"
 msgstr ""
 
 #: src/components/status.jsx:1219
-#: src/components/status.jsx:2955
+#: src/components/status.jsx:2957
 msgid "Queue"
 msgstr ""
 
 #: src/components/status.jsx:1255
-#: src/components/status.jsx:2991
+#: src/components/status.jsx:2993
 msgid "Quote with link"
 msgstr "Lainaa linkillä"
 
@@ -2597,31 +2597,31 @@ msgid "Boosted @{0}'s post"
 msgstr "Tehostettu käyttäjän @{0} julkaisua"
 
 #: src/components/status.jsx:1295
-#: src/components/status.jsx:3005
+#: src/components/status.jsx:3007
 msgid "Boost/Quote…"
 msgstr "Tehosta/lainaa…"
 
 #: src/components/status.jsx:1296
-#: src/components/status.jsx:3005
+#: src/components/status.jsx:3007
 msgid "Boost…"
 msgstr "Tehosta…"
 
 #: src/components/status.jsx:1308
 #: src/components/status.jsx:2172
-#: src/components/status.jsx:3021
+#: src/components/status.jsx:3023
 msgid "Unlike"
 msgstr "Kumoa tykkäys"
 
 #: src/components/status.jsx:1309
 #: src/components/status.jsx:2172
 #: src/components/status.jsx:2173
-#: src/components/status.jsx:3021
-#: src/components/status.jsx:3022
+#: src/components/status.jsx:3023
+#: src/components/status.jsx:3024
 msgid "Like"
 msgstr "Tykkää"
 
 #: src/components/status.jsx:1318
-#: src/components/status.jsx:3033
+#: src/components/status.jsx:3035
 msgid "Unbookmark"
 msgstr "Poista kirjanmerkeistä"
 
@@ -2742,17 +2742,17 @@ msgstr "Raportoi julkaisu…"
 
 #: src/components/status.jsx:2173
 #: src/components/status.jsx:2209
-#: src/components/status.jsx:3022
+#: src/components/status.jsx:3024
 msgid "Liked"
 msgstr "Tykätty"
 
 #: src/components/status.jsx:2206
-#: src/components/status.jsx:3008
+#: src/components/status.jsx:3010
 msgid "Boosted"
 msgstr "Tehostettu"
 
 #: src/components/status.jsx:2216
-#: src/components/status.jsx:3034
+#: src/components/status.jsx:3036
 msgid "Bookmarked"
 msgstr "Lisätty kirjanmerkkeihin"
 
@@ -2795,44 +2795,44 @@ msgstr "Näytä media"
 msgid "Edited"
 msgstr "Muokattu"
 
-#: src/components/status.jsx:2902
-#: src/components/status.jsx:2914
+#: src/components/status.jsx:2904
+#: src/components/status.jsx:2916
 msgid "Comments"
 msgstr "Kommentit"
 
-#: src/components/status.jsx:3192
+#: src/components/status.jsx:3194
 msgid "Post hidden by your filters"
 msgstr "Julkaisu piilotettu suodattimiesi perusteella"
 
-#: src/components/status.jsx:3193
+#: src/components/status.jsx:3195
 msgid "Post pending"
 msgstr "Julkaisu odottaa"
 
-#: src/components/status.jsx:3194
-#: src/components/status.jsx:3195
 #: src/components/status.jsx:3196
+#: src/components/status.jsx:3197
+#: src/components/status.jsx:3198
 msgid "Post unavailable"
 msgstr "Julkaisu ei saatavilla"
 
-#: src/components/status.jsx:3197
+#: src/components/status.jsx:3199
 msgid "Post removed by author"
 msgstr "Tekijä on poistanut julkaisun"
 
-#: src/components/status.jsx:3321
+#: src/components/status.jsx:3323
 msgid "Edit History"
 msgstr "Muokkaushistoria"
 
-#: src/components/status.jsx:3325
+#: src/components/status.jsx:3327
 msgid "Failed to load history"
 msgstr "Historian lataus epäonnistui"
 
-#: src/components/status.jsx:3330
+#: src/components/status.jsx:3332
 #: src/pages/annual-report.jsx:45
 msgid "Loading…"
 msgstr "Ladataan…"
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3462
+#: src/components/status.jsx:3464
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> tehosti"
 
