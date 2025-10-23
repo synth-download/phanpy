@@ -858,34 +858,28 @@ function Status({
       ? reaction.slice(1, -1)
       : reaction;
 
+    const reacts = (reactions ?? emojiReactions)
+    const reactObj = reacts?.find(r => r.name === emoji && r.me)
+
     try {
-      // Optimistic
-      states.statuses[sKey] = {
-        ...status,
-      };
-      const reacts = (reactions ?? emojiReactions)
-      if (!reacts?.some(r => r.name === emoji && r.me)) {
-        let newStatus;
+      let newStatus;
+      if (!reactObj) {
         if (!pleroma) {
           newStatus = await masto.v1.statuses.$select(id).react.$select(emoji).create();
         } else {
           newStatus = await masto.v1.pleroma.statuses.$select(id).reactions.$select(emoji).update();
         }
-        saveStatus(newStatus, instance);
       } else {
-        let newStatus;
         if (!pleroma) {
           newStatus = await masto.v1.statuses.$select(id).unreact.$select(emoji).create();
         } else {
           newStatus = await masto.v1.pleroma.statuses.$select(id).reactions.$select(emoji).remove();
         }
-        saveStatus(newStatus, instance);
       }
+      saveStatus(newStatus, instance);
       return true;
     } catch (e) {
       console.error(e);
-      // Revert optimistism
-      states.statuses[sKey] = status;
       return false;
     }
   }
