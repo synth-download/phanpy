@@ -302,7 +302,7 @@ msgstr "Peržiūrėti įrašų statistiką"
 #: src/pages/filters.jsx:225
 #: src/pages/list.jsx:302
 #: src/pages/notifications.jsx:943
-#: src/pages/scheduled-posts.jsx:258
+#: src/pages/scheduled-posts.jsx:288
 #: src/pages/settings.jsx:93
 #: src/pages/status.jsx:1563
 msgid "Close"
@@ -685,7 +685,7 @@ msgstr "Klaida ištrinant juodraštį. Bandyk dar kartą."
 #: src/components/list-add-edit.jsx:188
 #: src/components/status.jsx:1688
 #: src/pages/filters.jsx:603
-#: src/pages/scheduled-posts.jsx:368
+#: src/pages/scheduled-posts.jsx:398
 msgid "Delete…"
 msgstr "Ištrinti…"
 
@@ -1108,7 +1108,7 @@ msgstr "Medijos aprašymas"
 #: src/components/media-alt-modal.jsx:67
 #: src/components/status.jsx:1373
 #: src/components/status.jsx:1382
-#: src/components/translation-block.jsx:269
+#: src/components/translation-block.jsx:270
 msgid "Translate"
 msgstr "Versti"
 
@@ -2897,24 +2897,24 @@ msgstr "Išversta biografija"
 msgid "Auto-translated from {sourceLangText}"
 msgstr "Automatiškai išversta iš {sourceLangText}"
 
-#: src/components/translation-block.jsx:264
+#: src/components/translation-block.jsx:265
 msgid "Translating…"
 msgstr "Verčiama…"
 
-#: src/components/translation-block.jsx:267
+#: src/components/translation-block.jsx:268
 msgid "Translate from {sourceLangText} (auto-detected)"
 msgstr "Versti iš {sourceLangText} (automatiškai aptikta)"
 
-#: src/components/translation-block.jsx:268
+#: src/components/translation-block.jsx:269
 msgid "Translate from {sourceLangText}"
 msgstr "Versti iš {sourceLangText}"
 
 #. placeholder {0}: detectedLang ?? '…'
-#: src/components/translation-block.jsx:296
+#: src/components/translation-block.jsx:297
 msgid "Auto ({0})"
 msgstr "Automatinis ({0})"
 
-#: src/components/translation-block.jsx:309
+#: src/components/translation-block.jsx:310
 msgid "Failed to translate"
 msgstr "Nepavyko išversti."
 
@@ -3856,36 +3856,36 @@ msgstr "Nėra suplanuotų įrašų."
 
 #. Scheduled [in 1 day] ([Thu, Feb 27, 6:30:00 PM])
 #. placeholder {0}: niceDateTime(scheduledAt, { formatOpts: { weekday: 'short', second: 'numeric', }, })
-#: src/pages/scheduled-posts.jsx:206
+#: src/pages/scheduled-posts.jsx:210
 msgid "Scheduled <0><1/></0> <2>({0})</2>"
 msgstr "Suplanuota <0><1/></0> <2>({0})</2>"
 
 #. Scheduled [in 1 day]
-#: src/pages/scheduled-posts.jsx:262
+#: src/pages/scheduled-posts.jsx:292
 msgid "Scheduled <0><1/></0>"
 msgstr "Suplanuota <0><1/></0>"
 
-#: src/pages/scheduled-posts.jsx:307
+#: src/pages/scheduled-posts.jsx:337
 msgid "Scheduled post rescheduled"
 msgstr "Suplanuotas įrašas iš naujo"
 
-#: src/pages/scheduled-posts.jsx:314
+#: src/pages/scheduled-posts.jsx:344
 msgid "Failed to reschedule post"
 msgstr "Nepavyko suplanuoti įrašo iš naujo."
 
-#: src/pages/scheduled-posts.jsx:337
+#: src/pages/scheduled-posts.jsx:367
 msgid "Reschedule"
 msgstr "Suplanuoti iš naujo"
 
-#: src/pages/scheduled-posts.jsx:343
+#: src/pages/scheduled-posts.jsx:373
 msgid "Delete scheduled post?"
 msgstr "Ištrinti suplanuotą įrašą?"
 
-#: src/pages/scheduled-posts.jsx:351
+#: src/pages/scheduled-posts.jsx:381
 msgid "Scheduled post deleted"
 msgstr "Suplanuotas įrašas ištrintas"
 
-#: src/pages/scheduled-posts.jsx:358
+#: src/pages/scheduled-posts.jsx:388
 msgid "Failed to delete scheduled post"
 msgstr "Nepavyko ištrinti suplanuoto įrašo."
 

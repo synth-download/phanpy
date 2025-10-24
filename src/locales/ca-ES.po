@@ -302,7 +302,7 @@ msgstr "Veure estadístiques de les publicacions"
 #: src/pages/filters.jsx:225
 #: src/pages/list.jsx:302
 #: src/pages/notifications.jsx:943
-#: src/pages/scheduled-posts.jsx:258
+#: src/pages/scheduled-posts.jsx:288
 #: src/pages/settings.jsx:93
 #: src/pages/status.jsx:1563
 msgid "Close"
@@ -685,7 +685,7 @@ msgstr "Error quan desava l'esborrany. Torneu a intentar-ho."
 #: src/components/list-add-edit.jsx:188
 #: src/components/status.jsx:1688
 #: src/pages/filters.jsx:603
-#: src/pages/scheduled-posts.jsx:368
+#: src/pages/scheduled-posts.jsx:398
 msgid "Delete…"
 msgstr "Esborra…"
 
@@ -1108,7 +1108,7 @@ msgstr "Descripció dels mitjans"
 #: src/components/media-alt-modal.jsx:67
 #: src/components/status.jsx:1373
 #: src/components/status.jsx:1382
-#: src/components/translation-block.jsx:269
+#: src/components/translation-block.jsx:270
 msgid "Translate"
 msgstr "Tradueix"
 
@@ -2899,24 +2899,24 @@ msgstr "Biografia traduïda"
 msgid "Auto-translated from {sourceLangText}"
 msgstr "Traducció automàtica des del {sourceLangText}"
 
-#: src/components/translation-block.jsx:264
+#: src/components/translation-block.jsx:265
 msgid "Translating…"
 msgstr "Traducció en procés…"
 
-#: src/components/translation-block.jsx:267
+#: src/components/translation-block.jsx:268
 msgid "Translate from {sourceLangText} (auto-detected)"
 msgstr "Tradueix des del {sourceLangText} (autodetectat)"
 
-#: src/components/translation-block.jsx:268
+#: src/components/translation-block.jsx:269
 msgid "Translate from {sourceLangText}"
 msgstr "Tradueix des del {sourceLangText}"
 
 #. placeholder {0}: detectedLang ?? '…'
-#: src/components/translation-block.jsx:296
+#: src/components/translation-block.jsx:297
 msgid "Auto ({0})"
 msgstr "Automàtic ({0})"
 
-#: src/components/translation-block.jsx:309
+#: src/components/translation-block.jsx:310
 msgid "Failed to translate"
 msgstr "No s'ha pogut traduir"
 
@@ -3858,36 +3858,36 @@ msgstr "No hi ha publicacions programades."
 
 #. Scheduled [in 1 day] ([Thu, Feb 27, 6:30:00 PM])
 #. placeholder {0}: niceDateTime(scheduledAt, { formatOpts: { weekday: 'short', second: 'numeric', }, })
-#: src/pages/scheduled-posts.jsx:206
+#: src/pages/scheduled-posts.jsx:210
 msgid "Scheduled <0><1/></0> <2>({0})</2>"
 msgstr "Programada el <0><1/></0> <2>({0})</2>"
 
 #. Scheduled [in 1 day]
-#: src/pages/scheduled-posts.jsx:262
+#: src/pages/scheduled-posts.jsx:292
 msgid "Scheduled <0><1/></0>"
 msgstr "Programada <0><1/></0>"
 
-#: src/pages/scheduled-posts.jsx:307
+#: src/pages/scheduled-posts.jsx:337
 msgid "Scheduled post rescheduled"
 msgstr "Publicació programada reprogramada"
 
-#: src/pages/scheduled-posts.jsx:314
+#: src/pages/scheduled-posts.jsx:344
 msgid "Failed to reschedule post"
 msgstr "No s'ha pogut reprogramar la publicació"
 
-#: src/pages/scheduled-posts.jsx:337
+#: src/pages/scheduled-posts.jsx:367
 msgid "Reschedule"
 msgstr "Reprograma"
 
-#: src/pages/scheduled-posts.jsx:343
+#: src/pages/scheduled-posts.jsx:373
 msgid "Delete scheduled post?"
 msgstr "Voleu suprimir la publicació programada?"
 
-#: src/pages/scheduled-posts.jsx:351
+#: src/pages/scheduled-posts.jsx:381
 msgid "Scheduled post deleted"
 msgstr "S'ha suprimit la publicació programada"
 
-#: src/pages/scheduled-posts.jsx:358
+#: src/pages/scheduled-posts.jsx:388
 msgid "Failed to delete scheduled post"
 msgstr "No s'ha pogut suprimir la publicació programada"
 
