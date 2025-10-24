@@ -7,7 +7,7 @@ on:
 
 jobs:
   tag:
-    if: github.repository == 'zenfyrdev/phanpy'
+    if: github.repository == 'synth-download/phanpy'
     runs-on: ubuntu-latest
     permissions:
       contents: write
