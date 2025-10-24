@@ -1141,7 +1141,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   display: flex;
   overflow-x: auto;
   overflow-y: clip;
-  scroll-snap-type: x mandatory;
+  /* scroll-snap-type: x mandatory; */
   scroll-behavior: smooth;
   margin: 0;
   padding: 8px 16px;
