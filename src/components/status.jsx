@@ -1037,12 +1037,15 @@ function Status({
         })
         .values();
     }
-    const [{ value: reblogResults }, { value: favouriteResults }, { value: reactResults }] =
+    const [{ value: reblogResults }, { value: favouriteResults }, reactResult] =
       await Promise.allSettled([
         reblogIterator.current.next(),
         favouriteIterator.current.next(),
         reactIterator.current.next(),
       ]);
+
+    const reactResults = reactResult.status === 'fulfilled' ? reactResult.value : { value: [], done: true };
+
     if (reblogResults.value?.length || favouriteResults.value?.length || reactResults.value?.length) {
       const accounts = [];
       if (reblogResults.value?.length) {

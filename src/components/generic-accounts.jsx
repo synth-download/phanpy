@@ -86,7 +86,7 @@ export default function GenericAccounts({
                 });
               } else {
                 theAccount._types.push(...account._types);
-                theAccount._emojis = { ...theAccount._emojis, ...account._emojis }
+                theAccount._emojis = { ...theAccount?._emojis, ...account?._emojis }
               }
             }
             setAccounts(accounts);
@@ -101,7 +101,7 @@ export default function GenericAccounts({
                   newAccounts.push(account);
                 } else {
                   theAccount._types.push(...account._types);
-                  theAccount._emojis = { ...theAccount._emojis, ...account._emojis }
+                  theAccount._emojis = { ...theAccount?._emojis, ...account?._emojis }
                 }
               }
               return newAccounts;
