@@ -68,7 +68,7 @@ function emojiText({ account, count, emoji, emoji_url }) {
     staticUrl = emoji_url?.staticUrl;
   }
 
-  if (!emoji && !count) {
+  if (!emoji && count) {
     return (
       <Trans>
         <b><span title={count}>{shortenNumber(count)}</span> people</b>{' '}
