@@ -820,7 +820,7 @@ msgid "Rejected"
 msgstr ""
 
 #: src/components/generic-accounts.jsx:154
-#: src/components/notification.jsx:488
+#: src/components/notification.jsx:493
 #: src/pages/accounts.jsx:50
 #: src/pages/search.jsx:335
 #: src/pages/search.jsx:368
@@ -1446,9 +1446,13 @@ msgstr ""
 msgid "<0><1>{0}</1> people</0> reacted to your post."
 msgstr "<0><1>{0}</1> people</0> reacted to your post."
 
-#: src/components/notification.jsx:86
+#: src/components/notification.jsx:85
 msgid "{account} reacted to your post with {emojiObject}"
 msgstr ""
+
+#: src/components/notification.jsx:87
+msgid "{account} reacted to your post."
+msgstr "{account} reacted to your post."
 
 #: src/components/notification.jsx:93
 msgid "{account} published a post."
@@ -1569,34 +1573,34 @@ msgstr ""
 msgid "[Unknown notification type: {type}]"
 msgstr ""
 
-#: src/components/notification.jsx:484
+#: src/components/notification.jsx:489
 #: src/components/status.jsx:1292
 #: src/components/status.jsx:1302
 msgid "Boosted/Liked by…"
 msgstr ""
 
-#: src/components/notification.jsx:485
+#: src/components/notification.jsx:490
 msgid "Liked by…"
 msgstr ""
 
-#: src/components/notification.jsx:486
+#: src/components/notification.jsx:491
 msgid "Boosted by…"
 msgstr ""
 
-#: src/components/notification.jsx:487
+#: src/components/notification.jsx:492
 msgid "Followed by…"
 msgstr ""
 
-#: src/components/notification.jsx:568
-#: src/components/notification.jsx:584
+#: src/components/notification.jsx:573
+#: src/components/notification.jsx:589
 msgid "Learn more <0/>"
 msgstr ""
 
-#: src/components/notification.jsx:593
+#: src/components/notification.jsx:598
 msgid "View #Wrapstodon"
 msgstr "View #Wrapstodon"
 
-#: src/components/notification.jsx:835
+#: src/components/notification.jsx:840
 #: src/components/status.jsx:261
 msgid "Read more →"
 msgstr ""

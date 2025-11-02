@@ -68,7 +68,7 @@ function emojiText({ account, count, emoji, emoji_url }) {
     staticUrl = emoji_url?.staticUrl;
   }
 
-  if (!emoji) {
+  if (!emoji && !count) {
     return (
       <Trans>
         <b><span title={count}>{shortenNumber(count)}</span> people</b>{' '}
@@ -82,11 +82,11 @@ function emojiText({ account, count, emoji, emoji_url }) {
   ) : (
     emoji
   );
-  return (
-    <Trans>
-      {account} reacted to your post with {emojiObject}
-    </Trans>
-  );
+  return emojiObject ? (<Trans>
+    {account} reacted to your post with {emojiObject}
+  </Trans>) : (<Trans>
+    {account} reacted to your post.
+  </Trans>);
 }
 
 const contentText = {
@@ -284,7 +284,7 @@ const contentText = {
     </b>
   ),
   reaction: ({account, count, reaction: { name, url, staticUrl }}) => {
-    return emojiText({account, count, emoji: name, emoji_url: {url, staticUrl}})
+    return emojiText({account, count, emoji: name, emoji_url: staticUrl ? {url, staticUrl} : url})
   },
   emoji_reaction: emojiText,
   'pleroma:emoji_reaction': emojiText,
@@ -433,10 +433,15 @@ function Notification({
         text = text({ name: targetName });
       }
     } else if (type === 'reaction') {
+      const reactObj = notification.reaction ? notification.reaction : {}
+      if (notification.emoji) {
+        reactObj.name = notification.emoji
+        reactObj.url = notification.emojiUrl
+      }
       text = text({
         account: <NameText account={account} showAvatar />,
         count: count,
-        reaction: notification.reaction ?? {}
+        reaction: reactObj
       });
     } else if (
       (type === 'emoji_reaction' ||
