@@ -1044,6 +1044,7 @@ function Status({
 
   const reblogIterator = useRef();
   const favouriteIterator = useRef();
+  const reactIterator = useRef();
   async function fetchBoostedLikedByAccounts(firstLoad) {
     if (firstLoad) {
       reblogIterator.current = masto.v1.statuses
@@ -1058,13 +1059,20 @@ function Status({
           limit: REACTIONS_LIMIT,
         })
         .values();
+      reactIterator.current = masto.v1.statuses
+        .$select(statusID)
+        .reactions.list({
+          limit: REACTIONS_LIMIT,
+        })
+        .values();
     }
-    const [{ value: reblogResults }, { value: favouriteResults }] =
+    const [{ value: reblogResults }, { value: favouriteResults }, { value: reactResults }] =
       await Promise.allSettled([
         reblogIterator.current.next(),
         favouriteIterator.current.next(),
+        reactIterator.current.next(),
       ]);
-    if (reblogResults.value?.length || favouriteResults.value?.length) {
+    if (reblogResults.value?.length || favouriteResults.value?.length || reactResults.value?.length) {
       const accounts = [];
       if (reblogResults.value?.length) {
         accounts.push(
@@ -1082,9 +1090,21 @@ function Status({
           }),
         );
       }
+      if (reactResults.value?.length) {
+        accounts.push(
+          ...reactResults.value.map((a) => {
+            const acc = a.account
+            acc._types = ['react_' + a.name];
+
+            if (!acc._emojis) acc._emojis = {}
+            acc._emojis['react_' + a.name] = { name: a.name, url: a.url, staticUrl: a.staticUrl }
+            return acc;
+          }),
+        );
+      }
       return {
         value: accounts,
-        done: reblogResults.done && favouriteResults.done,
+        done: reblogResults.done && favouriteResults.done && reactResults.done,
       };
     }
     return {
