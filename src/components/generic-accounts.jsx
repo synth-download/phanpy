@@ -11,6 +11,7 @@ import states from '../utils/states';
 import useLocationChange from '../utils/useLocationChange';
 
 import AccountBlock from './account-block';
+import CustomEmoji from './custom-emoji';
 import Icon from './icon';
 import Link from './link';
 import Loader from './loader';
@@ -85,6 +86,7 @@ export default function GenericAccounts({
                 });
               } else {
                 theAccount._types.push(...account._types);
+                theAccount._emojis = { ...theAccount._emojis, ...account._emojis }
               }
             }
             setAccounts(accounts);
@@ -99,6 +101,7 @@ export default function GenericAccounts({
                   newAccounts.push(account);
                 } else {
                   theAccount._types.push(...account._types);
+                  theAccount._emojis = { ...theAccount._emojis, ...account._emojis }
                 }
               }
               return newAccounts;
@@ -172,17 +175,32 @@ export default function GenericAccounts({
                   <li key={key}>
                     {showReactions && account._types?.length > 0 && (
                       <div class="reactions-block">
-                        {account._types.map((type) => (
-                          <Icon
-                            icon={
-                              {
-                                reblog: 'rocket',
-                                favourite: 'heart',
-                              }[type]
-                            }
-                            class={`${type}-icon`}
-                          />
-                        ))}
+                        {account._types.map((type) => {
+                          if (type && !type.startsWith('react_')) {
+                            return (
+                              <Icon
+                                icon={
+                                  {
+                                    reblog: 'rocket',
+                                    favourite: 'heart',
+                                  }[type]
+                                }
+                                class={`${type}-icon`}
+                              />
+                            )
+                          }
+                          const {url, staticUrl, name} = account._emojis[type]
+
+                          if (url) {
+                            return (<CustomEmoji
+                              alt={name}
+                              url={url}
+                              staticUrl={staticUrl}
+                            />)
+                          } else {
+                            return (<span className={'emoji-reaction-name'}>{name}</span>)
+                          }
+                        })}
                       </div>
                     )}
                     <div class="account-relationships">
