@@ -58,23 +58,30 @@
       content-intrinsic-size: auto 88px;
       padding-block: calc(16px * (var(--custom-emoji-size) - 1));
     }
-    .section-header {
-      font-size: 80%;
-      text-transform: uppercase;
-      color: var(--text-insignificant-color);
-      padding: 8px 0 4px;
-      position: sticky;
-      top: 0;
-      background-color: var(--bg-color);
-      z-index: 1;
-      display: inline-block;
-      padding-inline-end: 8px;
-      pointer-events: none;
-      border-end-end-radius: 8px;
-    }
-    section {
-      display: flex;
-      flex-wrap: wrap;
+    details {
+      .emoji-grid {
+          display: flex;
+          flex-wrap: wrap;
+      }
+
+      .section-header {
+        font-size: 80%;
+        text-transform: uppercase;
+        color: var(--text-insignificant-color);
+        padding: 8px 0 4px;
+        position: sticky;
+        top: 0;
+        background-color: var(--bg-color);
+        z-index: 1;
+        display: list-item;
+        padding-inline-end: 8px;
+        cursor: pointer;
+        border-end-end-radius: 8px;
+      }
+
+      .section-header::marker {
+          content: "> ";
+      }
     }
     button {
       color: var(--text-color);
