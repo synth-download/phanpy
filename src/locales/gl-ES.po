@@ -272,7 +272,7 @@ msgstr "Ver estatísticas de publicación"
 #: src/components/account-sheet.jsx:38
 #: src/components/add-remove-lists-sheet.jsx:45
 #: src/components/compose.jsx:1044
-#: src/components/custom-emojis-modal.jsx:276
+#: src/components/custom-emojis-modal.jsx:302
 #: src/components/drafts.jsx:57
 #: src/components/edit-profile-sheet.jsx:87
 #: src/components/embed-modal.jsx:13
@@ -631,36 +631,78 @@ msgstr "Descargando GIF…"
 msgid "Failed to download GIF"
 msgstr "Fallou a descarga da GIF"
 
-#. placeholder {0}: i18n.number(emojis.length - max)
-#: src/components/custom-emojis-modal.jsx:104
-msgid "{0} more…"
-msgstr "{0} mais…"
-
-#: src/components/custom-emojis-modal.jsx:282
-msgid "Custom emojis"
-msgstr "Emojis personais"
-
-#: src/components/custom-emojis-modal.jsx:302
-msgid "Search emoji"
-msgstr "Buscar emoji"
-
-#: src/components/custom-emojis-modal.jsx:333
-msgid "Error loading custom emojis"
-msgstr "Erro ao cargar os emojis personais"
-
-#: src/components/custom-emojis-modal.jsx:344
+#: src/components/custom-emojis-modal.jsx:90
+#: src/components/custom-emojis-modal.jsx:372
 msgid "Recently used"
 msgstr "Usados recentemente"
 
-#: src/components/custom-emojis-modal.jsx:345
+#: src/components/custom-emojis-modal.jsx:91
+#: src/components/custom-emojis-modal.jsx:373
 msgid "Others"
 msgstr "Outros"
 
-#: src/components/custom-emojis-modal.jsx:364
+#: src/components/custom-emojis-modal.jsx:92
+msgid "Smileys"
+msgstr ""
+
+#: src/components/custom-emojis-modal.jsx:93
+msgid "People & Body"
+msgstr ""
+
+#: src/components/custom-emojis-modal.jsx:94
+msgid "Components"
+msgstr ""
+
+#: src/components/custom-emojis-modal.jsx:95
+msgid "Animals & Nature"
+msgstr ""
+
+#: src/components/custom-emojis-modal.jsx:96
+msgid "Food & Drink"
+msgstr ""
+
+#: src/components/custom-emojis-modal.jsx:97
+msgid "Travel & Places"
+msgstr ""
+
+#: src/components/custom-emojis-modal.jsx:98
+msgid "Activities"
+msgstr ""
+
+#: src/components/custom-emojis-modal.jsx:99
+msgid "Objects"
+msgstr ""
+
+#: src/components/custom-emojis-modal.jsx:100
+msgid "Symbols"
+msgstr ""
+
+#: src/components/custom-emojis-modal.jsx:101
+msgid "Flags"
+msgstr ""
+
+#. placeholder {0}: i18n.number(emojis.length - max)
+#: src/components/custom-emojis-modal.jsx:129
+msgid "{0} more…"
+msgstr "{0} mais…"
+
+#: src/components/custom-emojis-modal.jsx:308
+msgid "Custom emojis"
+msgstr "Emojis personais"
+
+#: src/components/custom-emojis-modal.jsx:328
+msgid "Search emoji"
+msgstr "Buscar emoji"
+
+#: src/components/custom-emojis-modal.jsx:359
+msgid "Error loading custom emojis"
+msgstr "Erro ao cargar os emojis personais"
+
+#: src/components/custom-emojis-modal.jsx:388
 msgid "Zoom out"
 msgstr "Diminuír"
 
-#: src/components/custom-emojis-modal.jsx:372
+#: src/components/custom-emojis-modal.jsx:396
 msgid "Zoom in"
 msgstr "Aumentar"
 
