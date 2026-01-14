@@ -294,7 +294,7 @@ For non-Mastodon servers:
 
 📢 https://mastodon.social/@cheeaun/113272683452140213
 
-- 💬 5 new languages: Dutch, Esperanto, Galician, Italian, Japanese
+- 💬 4 new languages: Dutch, Esperanto, Italian, Japanese
 - 🐛 Bug fixes
 
 Recap: Mastodon v4.3 features (https://github.com/mastodon/mastodon/releases/tag/v4.3.0) already supported on Phanpy:
@@ -354,6 +354,8 @@ Recap: Mastodon v4.3 features (https://github.com/mastodon/mastodon/releases/tag
 
 ## September 17, 2025
 
+📢 https://mastodon.social/@cheeaun/115219986749353363
+
 - 📝 Composer relayout
 - 🔍 Recent searches
 - 🏛️ Edit History Snapshots
@@ -366,7 +368,35 @@ Recap: Mastodon v4.3 features (https://github.com/mastodon/mastodon/releases/tag
 
 ## October 9, 2025
 
+📢 https://mastodon.social/@cheeaun/115344535219522826
+
 - 💬 More support for (upcoming) Mastodon v4.5's native quote posts
+- 🐛 Bug fixes
+
+## November 8, 2025
+
+📢 https://mastodon.social/@cheeaun/115514729408923191
+
+- 🗣️ Reply/Reply all
+- ⌨️ Sequential hotkeys, only g>h and g>n for now
+- 💈 Decal patterns for posting stats
+- 💬 Slightly more support for Mastodon v4.5's native quote posts
+- 🐛 Bug fixes
+
+## November 26, 2025
+
+📢 https://mastodon.social/@cheeaun/115616195859103739
+
+- 🤳 QR code for profiles and shortcuts settings
+- 🔃 Import/export accounts
+- 📸 Extract description from attached image metadata
+- 🐛 Bug fixes
+
+## January 7, 2026
+
+📢 https://mastodon.social/@cheeaun/115853890477340137
+
+- 🗓️ Experimental "Year In Posts"
 - 🐛 Bug fixes
 
 <!--

@@ -6,7 +6,6 @@ import { MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { deepEqual } from 'fast-equals';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
-import stringLength from 'string-length';
 import { uid } from 'uid/single';
 import { useSnapshot } from 'valtio';
 
@@ -32,6 +31,7 @@ import {
   getCurrentAccountNS,
   getCurrentInstanceConfiguration,
 } from '../utils/store-utils';
+import stringLength from '../utils/string-length';
 import supports from '../utils/supports';
 import unfurlMastodonLink from '../utils/unfurl-link';
 import urlRegexObj from '../utils/url-regex';
@@ -118,6 +118,22 @@ const ADD_LABELS = {
 
 const DEFAULT_SCHEDULED_AT = Math.max(10 * 60 * 1000, MIN_SCHEDULED_AT); // 10 mins
 
+function isMimeTypeSupported(fileType, supportedMimeTypes) {
+  if (!supportedMimeTypes) return true;
+  if (supportedMimeTypes.includes(fileType)) return true;
+
+  // If type is not supported, try to find a supported type with the same subtype
+  // E.g. application/ogg -> audio/ogg
+  const [suffixType, subtype] = fileType.split('/');
+  const subTypeMap = {};
+  supportedMimeTypes.forEach((mimeType) => {
+    const [t, st] = mimeType.split('/');
+    subTypeMap[st] = t;
+  });
+
+  return !!subTypeMap[subtype];
+}
+
 function Compose({
   onClose,
   replyToStatus,
@@ -186,10 +202,13 @@ function Compose({
   const [scheduledAt, setScheduledAt] = useState(null);
   const [quoteSuggestion, setQuoteSuggestion] = useState(null);
   const [localQuoteStatus, setLocalQuoteStatus] = useState(quoteStatus);
+  const [quoteCleared, setQuoteCleared] = useState(false);
 
   const prefs = getPreferences();
 
-  const currentQuoteStatus = localQuoteStatus || quoteStatus;
+  const currentQuoteStatus = quoteCleared
+    ? null
+    : localQuoteStatus || quoteStatus;
 
   // Quote eligibility logic duplicated from status.jsx
   const checkQuoteEligibility = (status) => {
@@ -227,6 +246,11 @@ function Compose({
 
       // Cannot add/remove/replace current quote when editing
       if (editStatus) {
+        return;
+      }
+
+      // Don't show quote suggestion when visibility is 'direct'
+      if (visibility === 'direct') {
         return;
       }
 
@@ -760,10 +784,7 @@ function Compose({
         const item = items[i];
         if (item.kind === 'file') {
           const file = item.getAsFile();
-          if (
-            supportedMimeTypes !== undefined &&
-            !supportedMimeTypes.includes(file.type)
-          ) {
+          if (!isMimeTypeSupported(file.type, supportedMimeTypes)) {
             unsupportedFiles.push(file);
           } else {
             files.push(file);
@@ -1326,7 +1347,7 @@ function Compose({
                     params.quote_approval_policy = quoteApprovalPolicy;
                   }
                   if (
-                    supports('@mastodon/edit-media-attributes') ||
+                    supports('@mastodon') ||
                     supports('@gotosocial/edit-media-attributes')
                   ) {
                     params.media_attributes = mediaAttachments.map(
@@ -1431,6 +1452,17 @@ function Compose({
                   dir="auto"
                   onInput={() => {
                     updateCharCount();
+                  }}
+                  onKeyDown={(e) => {
+                    if (
+                      e.key === 'Enter' &&
+                      !e.ctrlKey &&
+                      !e.metaKey &&
+                      !e.isComposing
+                    ) {
+                      e.preventDefault();
+                      focusTextarea();
+                    }
                   }}
                 />
               </TextExpander>
@@ -1694,8 +1726,7 @@ function Compose({
                     disabled={cwButtonDisabled}
                     onClick={onCWButtonClick}
                   >
-                    <Icon icon={`eye-${sensitive ? 'close' : 'open'}`} />{' '}
-                    <span>{_(ADD_LABELS.sensitive)}</span>
+                    <Icon icon="alert" /> <span>{_(ADD_LABELS.sensitive)}</span>
                   </MenuItem>
                   {showPollButton && (
                     <MenuItem
@@ -1773,10 +1804,7 @@ function Compose({
                   disabled={cwButtonDisabled}
                   onClick={onCWButtonClick}
                 >
-                  <Icon
-                    icon={`eye-${sensitive ? 'close' : 'open'}`}
-                    alt={_(ADD_LABELS.sensitive)}
-                  />
+                  <Icon icon="alert" alt={_(ADD_LABELS.sensitive)} />
                 </button>
                 {showPollButton && (
                   <button
@@ -1903,6 +1931,35 @@ function Compose({
                     e.target.value === 'direct'
                   ) {
                     setQuoteApprovalPolicy('nobody');
+                  }
+
+                  if (e.target.value === 'direct' && currentQuoteStatus?.id) {
+                    const quoteURL = currentQuoteStatus.url;
+                    if (quoteURL) {
+                      const currentText = textareaRef.current.value;
+                      if (!currentText.includes(quoteURL)) {
+                        textareaRef.current.value =
+                          currentText + (currentText ? '\n' : '') + quoteURL;
+                        oninputTextarea();
+                      }
+                    }
+                    setQuoteCleared(true);
+                    showToast(t`Quotes can't be embedded in private mentions.`);
+                  } else if (e.target.value !== 'direct' && quoteCleared) {
+                    const quoteURL = (localQuoteStatus || quoteStatus)?.url;
+                    if (quoteURL && textareaRef.current) {
+                      const currentValue = textareaRef.current.value;
+                      const linkPos = currentValue.indexOf(quoteURL);
+                      if (linkPos !== -1) {
+                        let newValue =
+                          currentValue.slice(0, linkPos) +
+                          currentValue.slice(linkPos + quoteURL.length);
+                        newValue = newValue.replace(/\n+$/, '');
+                        textareaRef.current.value = newValue;
+                        oninputTextarea();
+                      }
+                    }
+                    setQuoteCleared(false);
                   }
                 }}
                 disabled={uiState === 'loading' || !!editStatus}

@@ -461,7 +461,11 @@ function Media({
                 }}
                 onError={(e) => {
                   const { src } = e.target;
-                  if (src === mediaURL && mediaURL !== remoteMediaURL) {
+                  if (
+                    src === mediaURL &&
+                    remoteMediaURL &&
+                    mediaURL !== remoteMediaURL
+                  ) {
                     e.target.src = remoteMediaURL;
                   } else {
                     setMediaLoadError(true);
@@ -731,7 +735,26 @@ function Media({
           style={!showOriginal && mediaStyles}
         >
           {showOriginal ? (
-            <audio src={remoteUrl || url} preload="none" controls autoPlay />
+            previewUrl ? (
+              <video
+                src={(remoteUrl || url) + '#t=0.1'}
+                width={width}
+                height={height}
+                data-orientation={orientation}
+                poster={previewUrl}
+                style={{
+                  background: `url(${previewUrl}) center/cover`,
+                  aspectRatio: `${width}/${height}`,
+                }}
+                preload="metadata"
+                controls
+                controlsList="nofullscreen"
+                autoPlay
+                playsInline
+              />
+            ) : (
+              <audio src={remoteUrl || url} preload="none" controls autoPlay />
+            )
           ) : previewUrl ? (
             <img
               src={previewUrl}

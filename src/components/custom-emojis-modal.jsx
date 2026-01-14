@@ -86,30 +86,7 @@ const CustomEmojisList = memo(({ emojis, onSelect, category }) => {
   const [max, setMax] = useState(CUSTOM_EMOJIS_COUNT);
   const showMore = emojis.length > max;
 
-  const defaultCats = {
-    '--recent--': t`Recently used`,
-    '--others--': t`Others`,
-    '--smileys-emotion--': t`Smileys`,
-    '--people-body--': t`People & Body`,
-    '--component--': t`Components`,
-    '--animals-nature--': t`Animals & Nature`,
-    '--food-drink--': t`Food & Drink`,
-    '--travel-places--': t`Travel & Places`,
-    '--activities--': t`Activities`,
-    '--objects--': t`Objects`,
-    '--symbols--': t`Symbols`,
-    '--flags--': t`Flags`
-  }
-
   return (
-    <details>
-      <summary className="section-header">
-        {(emojis) && (
-          !emojis[0].unicode ?
-          <CustomEmoji url={emojis[0].url} staticUrl={emojis[0].staticUrl} alt={emojis[0].shortcode}/> :
-          <span>{emojis[0].unicode}</span>
-        )} {defaultCats[category] || category}
-      </summary>
       <div className='emoji-grid'>
         {emojis.slice(0, max).map((emoji) => (
           <CustomEmojiButton
@@ -130,7 +107,6 @@ const CustomEmojisList = memo(({ emojis, onSelect, category }) => {
           </button>
         )}
       </div>
-    </details>
   );
 });
 
@@ -289,6 +265,23 @@ function CustomEmojisModal({
     }
   }, []);
 
+  const hasCustomEmojis = !!customEmojis?.length;
+
+  const defaultCats = {
+    '--recent--': t`Recently used`,
+    '--others--': t`Others`,
+    '--smileys-emotion--': t`Smileys`,
+    '--people-body--': t`People & Body`,
+    '--component--': t`Components`,
+    '--animals-nature--': t`Animals & Nature`,
+    '--food-drink--': t`Food & Drink`,
+    '--travel-places--': t`Travel & Places`,
+    '--activities--': t`Activities`,
+    '--objects--': t`Objects`,
+    '--symbols--': t`Symbols`,
+    '--flags--': t`Flags`
+  }
+
   return (
     <div
       id="custom-emojis-sheet"
@@ -313,89 +306,105 @@ function CustomEmojisModal({
             <small class="insignificant"> • {instance}</small>
           )}
         </div>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            const emoji = matches[0];
-            if (emoji) {
-              onSelectEmoji(emoji.unicode ? emoji.unicode : `:${emoji.shortcode}:`);
-            }
-          }}
-        >
-          <input
-            ref={inputRef}
-            type="search"
-            placeholder={t`Search emoji`}
-            onInput={onFind}
-            autocomplete="off"
-            autocorrect="off"
-            autocapitalize="off"
-            spellCheck="false"
-            dir="auto"
-            defaultValue={defaultSearchTerm || ''}
-          />
-        </form>
+        {hasCustomEmojis && (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const emoji = matches[0];
+              if (emoji) {
+                onSelectEmoji(emoji.unicode ? emoji.unicode : `:${emoji.shortcode}:`);
+              }
+            }}
+          >
+            <input
+              ref={inputRef}
+              type="search"
+              placeholder={t`Search emoji`}
+              onInput={onFind}
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellCheck="false"
+              dir="auto"
+              enterKeyHint="search"
+              defaultValue={defaultSearchTerm || ''}
+            />
+          </form>
+        )}
       </header>
       <main ref={scrollableRef}>
-        {matches !== null ? (
-          <ul class="custom-emojis-matches custom-emojis-list">
-            {matches.map((emoji) => (
-              <li key={emoji.shortcode} class="custom-emojis-match">
-                <CustomEmojiButton
-                  emoji={emoji}
-                  onClick={() => {
-                    onSelectEmoji(emoji.unicode ? emoji.unicode : `:${emoji.shortcode}:`);
-                  }}
-                  showCode
-                />
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <div class="custom-emojis-list">
-            {uiState === 'error' && (
-              <div class="ui-state">
-                <p>
-                  <Trans>Error loading custom emojis</Trans>
-                </p>
+        {hasCustomEmojis ? (
+          <>
+            {matches !== null ? (
+              <ul class="custom-emojis-matches custom-emojis-list">
+                {matches.map((emoji) => (
+                  <li key={emoji.shortcode} class="custom-emojis-match">
+                    <CustomEmojiButton
+                      emoji={emoji}
+                      onClick={() => {
+                        onSelectEmoji(emoji.unicode ? emoji.unicode : `:${emoji.shortcode}:`);
+                      }}
+                      showCode
+                    />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div class="custom-emojis-list">
+                {uiState === 'error' && (
+                  <div class="ui-state">
+                    <p>
+                      <Trans>Error loading custom emojis</Trans>
+                    </p>
+                  </div>
+                )}
+                {uiState === 'default' &&
+                  Object.entries(customEmojisCatList).map(
+                    ([category, emojis]) =>
+                      !!emojis?.length && (
+                        <details class="section-container">
+                          <summary className="section-header">
+                            {(emojis) && (
+                              !emojis[0].unicode ?
+                              <CustomEmoji url={emojis[0].url} staticUrl={emojis[0].staticUrl} alt={emojis[0].shortcode}/> :
+                              <span>{emojis[0].unicode}</span>
+                            )} {defaultCats[category] || category}
+                          </summary>
+                          <CustomEmojisList
+                            emojis={emojis}
+                            onSelect={onSelectEmoji}
+                          />
+                        </details>
+                      ),
+                  )}
               </div>
             )}
-            {uiState === 'default' &&
-              Object.entries(customEmojisCatList).map(
-                ([category, emojis]) =>
-                  !!emojis?.length && (
-                    <div class="section-container">
-                      <CustomEmojisList
-                        emojis={emojis}
-                        onSelect={onSelectEmoji}
-                        category={{
-                          '--recent--': t`Recently used`,
-                          '--others--': t`Others`,
-                        }[category] || category}
-                      />
-                    </div>
-                  ),
-              )}
+            <div class="size-range">
+              <button
+                type="button"
+                class="plain4"
+                onClick={onEmojiSizeDecrease}
+                disabled={emojiSize <= EMOJI_SIZE_MIN}
+              >
+                <Icon icon="zoom-out" size="l" alt={t`Zoom out`} />
+              </button>
+              <button
+                type="button"
+                class="plain4"
+                onClick={onEmojiSizeIncrease}
+                disabled={emojiSize >= EMOJI_SIZE_MAX}
+              >
+                <Icon icon="zoom-in" size="l" alt={t`Zoom in`} />
+              </button>
+            </div>
+          </>
+        ) : (
+          <div class="ui-state">
+            <p>
+              <Trans>Custom emojis are not available on this server.</Trans>
+            </p>
           </div>
         )}
-        <div class="size-range">
-          <button
-            type="button"
-            class="plain4"
-            onClick={onEmojiSizeDecrease}
-            disabled={emojiSize <= EMOJI_SIZE_MIN}
-          >
-            <Icon icon="zoom-out" size="l" alt={t`Zoom out`} />
-          </button>
-          <button
-            type="button"
-            class="plain4"
-            onClick={onEmojiSizeIncrease}
-            disabled={emojiSize >= EMOJI_SIZE_MAX}
-          >
-            <Icon icon="zoom-in" size="l" alt={t`Zoom in`} />
-          </button>
-        </div>
       </main>
     </div>
   );
