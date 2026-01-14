@@ -11,7 +11,11 @@
       "*.{js,jsx,ts,tsx,json,jsonc}",
       "scripts/**/*.js",
       "!wrangler.jsonc",
-      "!i18n-volunteers.json"
+      "!i18n-volunteers.json",
+      "!src/components/quote-chain-modal.css",
+      "!!**/.git",
+      "!!**/dist",
+      "!!**/node_modules"
     ]
   },
   "formatter": {

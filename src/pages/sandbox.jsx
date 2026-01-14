@@ -374,12 +374,12 @@ export default function Sandbox() {
     };
 
     // Clear the getPreferences cache to ensure our new preferences are used
-    getPreferences.clear();
+    getPreferences.cache.clear();
 
     // Restore the original method when the component unmounts
     return () => {
       store.account.get = originalGet;
-      getPreferences.clear();
+      getPreferences.cache.clear();
     };
   }, [toggleState.mediaPreference, toggleState.expandWarnings]);
 
@@ -767,7 +767,7 @@ export default function Sandbox() {
         class={`sandbox-preview ${toggleState.displayStyle}`}
         onClickCapture={(e) => {
           const isAllowed = e.target.closest(
-            '.media, .media-caption, .spoiler-button, .spoiler-media-button, .math-block button',
+            '.media, .media-caption, .spoiler-button, .spoiler-media-button, .math-block button, .status-card-unfulfilled button',
           );
           if (isAllowed) return;
           e.preventDefault();
@@ -1370,6 +1370,54 @@ export default function Sandbox() {
                             <span>Revoked</span>
                           </label>
                         </li>
+                        <li>
+                          <label>
+                            <input
+                              type="radio"
+                              name="quoteState"
+                              value="blocked_account"
+                              checked={
+                                toggleState.quoteState === 'blocked_account'
+                              }
+                              onChange={(e) => {
+                                updateToggles({ quoteState: e.target.value });
+                              }}
+                            />
+                            <span>Blocked account</span>
+                          </label>
+                        </li>
+                        <li>
+                          <label>
+                            <input
+                              type="radio"
+                              name="quoteState"
+                              value="blocked_domain"
+                              checked={
+                                toggleState.quoteState === 'blocked_domain'
+                              }
+                              onChange={(e) => {
+                                updateToggles({ quoteState: e.target.value });
+                              }}
+                            />
+                            <span>Blocked domain</span>
+                          </label>
+                        </li>
+                        <li>
+                          <label>
+                            <input
+                              type="radio"
+                              name="quoteState"
+                              value="muted_account"
+                              checked={
+                                toggleState.quoteState === 'muted_account'
+                              }
+                              onChange={(e) => {
+                                updateToggles({ quoteState: e.target.value });
+                              }}
+                            />
+                            <span>Muted account</span>
+                          </label>
+                        </li>
                       </ul>
                     </li>
                     <li>
@@ -1617,7 +1665,7 @@ export default function Sandbox() {
                         }
                       />
                       <span>Always hide media</span>
-                      <sup>2</sup>
+                      {/* <sup>2</sup> */}
                     </label>
                   </li>
                 </ul>
@@ -1645,7 +1693,7 @@ export default function Sandbox() {
               Link preview card conditionally renders based on presence of other
               elements like media, etc.
             </li>
-            <li>"Always hide media" is not supported yet.</li>
+            {/* <li>"Always hide media" is not supported yet.</li> */}
           </ul>
           <p>
             Images are from{' '}

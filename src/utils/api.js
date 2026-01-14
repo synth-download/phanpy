@@ -45,7 +45,8 @@ export function initClient({ instance, accessToken }) {
   const masto = createRestAPIClient({
     url,
     accessToken, // Can be null
-    timeout: 2 * 60_000, // Unfortunatly this is global instead of per-request
+    timeout: 2 * 60_000, // Unfortunately this is global instead of per-request
+    mediaTimeout: 10 * 60_000,
   });
 
   const client = {
@@ -197,12 +198,12 @@ export async function initAccount(client, instance, accessToken, vapidKey) {
 export const getPreferences = mem(
   () => store.account.get('preferences') || {},
   {
-    maxAge: 60 * 1000, // 1 minute
+    expires: 60 * 1000, // 1 minute
   },
 );
 
 export function setPreferences(preferences) {
-  getPreferences.clear(); // clear memo cache
+  getPreferences.cache.clear(); // clear memo cache
   store.account.set('preferences', preferences);
 }
 
