@@ -10,6 +10,7 @@ import { memo } from 'preact/compat';
 import {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useReducer,
   useRef,
@@ -43,12 +44,14 @@ import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
+import store from '../utils/store';
 import { getCurrentAccountID, getCurrentAccountNS } from '../utils/store-utils';
 import supports from '../utils/supports';
 import { assignFollowedTags } from '../utils/timeline-utils';
 import useTitle from '../utils/useTitle';
 
 const FILTER_CONTEXT = 'home';
+const CATCHUP_NS = 'catchup';
 
 const RANGES = [
   { label: msg`last 1 hour`, value: 1 },
@@ -63,14 +66,14 @@ const RANGES = [
   { label: msg`last 10 hours`, value: 10 },
   { label: msg`last 11 hours`, value: 11 },
   { label: msg`last 12 hours`, value: 12 },
-  { label: msg`beyond 12 hours`, value: 13 },
+  { label: msg`beyond 12 hours`, value: 13, beyond: true },
 ];
 
 const FILTER_KEYS = {
   original: msg`Original`,
   replies: msg`Replies`,
-  boosts: msg`Boosts`,
   quotes: msg`Quotes`,
+  boosts: msg`Boosts`,
   followedTags: msg`Followed tags`,
   groups: msg`Groups`,
   filtered: msg`Filtered`,
@@ -209,6 +212,14 @@ function Catchup() {
   const handleCatchupClick = useCallback(async ({ duration } = {}) => {
     const now = Date.now();
     const maxCreatedAt = duration ? now - duration : null;
+    console.log('CATCHUP', {
+      duration,
+      durationHuman: duration ? `${duration / 1000 / 60 / 60}h` : null,
+      maxCreatedAt,
+      maxCreatedAtHuman: maxCreatedAt
+        ? dtf.format(new Date(maxCreatedAt))
+        : null,
+    });
     setUIState('loading');
     const results = await fetchHome({ maxCreatedAt });
     // Namespaced by account ID
@@ -247,6 +258,20 @@ function Catchup() {
   const [reloadCatchupsCount, reloadCatchups] = useReducer((c) => c + 1, 0);
   const [lastCatchupEndAt, setLastCatchupEndAt] = useState(null);
   const [prevCatchups, setPrevCatchups] = useState([]);
+
+  useEffect(() => {
+    const catchupIds = new Set(prevCatchups.map((pc) => pc.id));
+    for (let i = sessionStorage.length - 1; i >= 0; i--) {
+      const key = sessionStorage.key(i);
+      if (key?.startsWith(`${CATCHUP_NS}-`)) {
+        const catchupId = key.replace(`${CATCHUP_NS}-`, '');
+        if (!catchupIds.has(catchupId)) {
+          store.session.del(key);
+        }
+      }
+    }
+  }, [prevCatchups]);
+
   useEffect(() => {
     (async () => {
       try {
@@ -430,6 +455,53 @@ function Catchup() {
   const [sortOrder, setSortOrder] = useState('asc');
   const [groupBy, setGroupBy] = useState(null);
 
+  useEffect(() => {
+    if (!id) return;
+    const savedState = store.session.getJSON(`${CATCHUP_NS}-${id}`);
+    if (savedState) {
+      if (savedState.selectedFilterCategory !== undefined) {
+        setSelectedFilterCategory(savedState.selectedFilterCategory);
+      }
+      if (savedState.selectedAuthor !== undefined) {
+        setSelectedAuthor(savedState.selectedAuthor);
+      }
+      if (savedState.sortBy !== undefined) {
+        setSortBy(savedState.sortBy);
+      }
+      if (savedState.sortOrder !== undefined) {
+        setSortOrder(savedState.sortOrder);
+      }
+      if (savedState.groupBy !== undefined) {
+        setGroupBy(savedState.groupBy);
+      }
+      if (savedState.showTopLinks !== undefined) {
+        setShowTopLinks(savedState.showTopLinks);
+      }
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (!id || uiState !== 'results') return;
+    const state = {
+      selectedFilterCategory,
+      selectedAuthor,
+      sortBy,
+      sortOrder,
+      groupBy,
+      showTopLinks,
+    };
+    store.session.setJSON(`${CATCHUP_NS}-${id}`, state);
+  }, [
+    id,
+    uiState,
+    selectedFilterCategory,
+    selectedAuthor,
+    sortBy,
+    sortOrder,
+    groupBy,
+    showTopLinks,
+  ]);
+
   const [filteredPosts, authors, authorCounts] = useMemo(() => {
     const authorsHash = {};
     const authorCountsMap = new Map();
@@ -589,6 +661,43 @@ function Catchup() {
 
   const scrollableRef = useRef(null);
 
+  useLayoutEffect(() => {
+    if (!id || uiState !== 'results' || !scrollableRef.current) return;
+    if (!sortedFilteredPosts.length) return;
+
+    const savedState = store.session.getJSON(`${CATCHUP_NS}-${id}`);
+    if (savedState?.scrollTop !== undefined && savedState.scrollTop > 0) {
+      const timeoutId = setTimeout(() => {
+        if (scrollableRef.current) {
+          scrollableRef.current.scrollTo({
+            top: savedState.scrollTop,
+            behavior: 'instant',
+          });
+        }
+      }, 100);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [id, uiState, sortedFilteredPosts.length]);
+
+  useEffect(() => {
+    if (!id || uiState !== 'results' || !scrollableRef.current) return;
+
+    const handleScroll = () => {
+      if (!scrollableRef.current) return;
+      const savedState = store.session.getJSON(`${CATCHUP_NS}-${id}`) || {};
+      savedState.scrollTop = scrollableRef.current.scrollTop;
+      store.session.setJSON(`${CATCHUP_NS}-${id}`, savedState);
+    };
+
+    const scrollElement = scrollableRef.current;
+    scrollElement.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      scrollElement.removeEventListener('scroll', handleScroll);
+    };
+  }, [id, uiState]);
+
   // if range value exceeded lastCatchupEndAt, show error
   const lastCatchupRange = useMemo(() => {
     // return hour, not ms
@@ -713,7 +822,7 @@ function Catchup() {
           nextItem.scrollIntoView({
             block: 'center',
             inline: 'center',
-            behavior: 'smooth',
+            behavior: 'instant',
           });
         }
       } else {
@@ -726,7 +835,7 @@ function Catchup() {
           topmostItem.scrollIntoView({
             block: 'nearest',
             inline: 'center',
-            behavior: 'smooth',
+            behavior: 'instant',
           });
         }
       }
@@ -758,7 +867,7 @@ function Catchup() {
           prevItem.scrollIntoView({
             block: 'center',
             inline: 'center',
-            behavior: 'smooth',
+            behavior: 'instant',
           });
         }
       } else {
@@ -771,7 +880,7 @@ function Catchup() {
           topmostItem.scrollIntoView({
             block: 'nearest',
             inline: 'center',
-            behavior: 'smooth',
+            behavior: 'instant',
           });
         }
       }
@@ -1001,20 +1110,23 @@ function Catchup() {
                 <button
                   type="button"
                   onClick={() => {
-                    if (range < RANGES[RANGES.length - 1].value) {
-                      let duration;
-                      if (
-                        range === RANGES[RANGES.length - 1].value &&
-                        catchupLastRef.current?.checked
-                      ) {
+                    let duration;
+                    const beyondRange = RANGES.find((r) => r.beyond);
+                    if (range < beyondRange.value) {
+                      // Within range
+                      duration = range * 60 * 60 * 1000;
+                    } else {
+                      // Beyond range
+                      const untilLastCatchup = catchupLastRef.current?.checked;
+                      if (untilLastCatchup) {
+                        // Until last catch-up's end time
                         duration = Date.now() - lastCatchupEndAt;
                       } else {
-                        duration = range * 60 * 60 * 1000;
+                        // Go beyond range until max, even after last catch-up's end time
+                        // Don't need to set duration
                       }
-                      handleCatchupClick({ duration });
-                    } else {
-                      handleCatchupClick();
                     }
+                    handleCatchupClick({ duration });
                   }}
                 >
                   <Trans>Catch up</Trans>
@@ -2000,7 +2112,11 @@ function PostPeek({ post, filterInfo }) {
                             loading="lazy"
                             onError={(e) => {
                               const { src } = e.target;
-                              if (src === mediaURL) {
+                              if (
+                                src === mediaURL &&
+                                remoteMediaURL &&
+                                mediaURL !== remoteMediaURL
+                              ) {
                                 e.target.src = remoteMediaURL;
                               }
                             }}
@@ -2024,7 +2140,11 @@ function PostPeek({ post, filterInfo }) {
                             loading="lazy"
                             onError={(e) => {
                               const { src } = e.target;
-                              if (src === mediaURL) {
+                              if (
+                                src === mediaURL &&
+                                remoteMediaURL &&
+                                mediaURL !== remoteMediaURL
+                              ) {
                                 e.target.src = remoteMediaURL;
                               }
                             }}
@@ -2042,7 +2162,11 @@ function PostPeek({ post, filterInfo }) {
                             loading="lazy"
                             onError={(e) => {
                               const { src } = e.target;
-                              if (src === mediaURL) {
+                              if (
+                                src === mediaURL &&
+                                remoteMediaURL &&
+                                mediaURL !== remoteMediaURL
+                              ) {
                                 e.target.src = remoteMediaURL;
                               }
                             }}

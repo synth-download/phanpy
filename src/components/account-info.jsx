@@ -1,6 +1,6 @@
 import './account-info.css';
 
-import { plural } from '@lingui/core/macro';
+import { msg, plural } from '@lingui/core/macro';
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { MenuDivider, MenuItem } from '@szhsin/react-menu';
 import {
@@ -20,7 +20,7 @@ import pmem from '../utils/pmem';
 import { supportsNativeQuote } from '../utils/quote-utils';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
-import states from '../utils/states';
+import states, { hideAllModals } from '../utils/states';
 import {
   getAccounts,
   getCurrentAccountID,
@@ -50,7 +50,7 @@ function fetchFamiliarFollowers(currentID, masto) {
   });
 }
 const memFetchFamiliarFollowers = pmem(fetchFamiliarFollowers, {
-  maxAge: ACCOUNT_INFO_MAX_AGE,
+  expires: ACCOUNT_INFO_MAX_AGE,
 });
 
 async function fetchPostingStats(accountID, masto) {
@@ -107,8 +107,29 @@ async function fetchPostingStats(accountID, masto) {
   return stats;
 }
 const memFetchPostingStats = pmem(fetchPostingStats, {
-  maxAge: ACCOUNT_INFO_MAX_AGE,
+  expires: ACCOUNT_INFO_MAX_AGE,
 });
+
+const isValidUrl = (string) => {
+  try {
+    new URL(string);
+    return true;
+  } catch (_) {
+    return false;
+  }
+};
+export const handleScannerClick = () => {
+  states.showQrScannerModal = {
+    checkValidity: isValidUrl,
+    actionableText: msg`View profile`,
+    onClose: ({ text } = {}) => {
+      if (text) {
+        hideAllModals();
+        location.hash = `/${text}`;
+      }
+    },
+  };
+};
 
 function AccountInfo({
   account,
@@ -412,22 +433,21 @@ function AccountInfo({
                 </div>
                 <div class="stats">
                   <div>
-                    <span>██</span> <Trans>Followers</Trans>
+                    <span>██</span> ██████
                   </div>
                   <div>
-                    <span>██</span>{' '}
-                    <Trans id="following.stats">Following</Trans>
+                    <span>██</span> ██████
                   </div>
                   <div>
-                    <span>██</span> <Trans>Posts</Trans>
+                    <span>██</span> █████
                   </div>
                 </div>
               </div>
               <div class="actions">
                 <span />
                 <span class="buttons">
-                  <button type="button" class="plain" disabled>
-                    <Icon icon="more" size="l" alt={t`More`} />
+                  <button type="button" class="plain4" disabled>
+                    <Icon icon="more2" size="l" />
                   </button>
                 </span>
               </div>
@@ -594,6 +614,24 @@ function AccountInfo({
                       <Icon icon="link" />
                       <span>
                         <Trans>Copy handle</Trans>
+                      </span>
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        states.showQrCodeModal = {
+                          text: url,
+                          arena: avatarStatic,
+                          backgroundMask: headerStatic,
+                          caption: acct.includes('@')
+                            ? acct
+                            : `${acct}@${instance}`,
+                          onScannerClick: handleScannerClick,
+                        };
+                      }}
+                    >
+                      <Icon icon="qrcode" />
+                      <span>
+                        <Trans>QR code</Trans>
                       </span>
                     </MenuItem>
                     <MenuItem href={url} target="_blank">

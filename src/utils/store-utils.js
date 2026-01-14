@@ -59,7 +59,7 @@ export function getCurrentAccountID() {
 
 // Memoized version of getCurrentAccountID for performance
 export const getCurrentAccID = mem(getCurrentAccountID, {
-  maxAge: 60 * 1000, // 1 minute
+  expires: 60 * 1000, // 1 minute
 });
 
 export function setCurrentAccountID(id) {
@@ -90,7 +90,7 @@ export function getCurrentAccount() {
 
 // Memoized version of getCurrentAccount for performance
 export const getCurrentAcc = mem(getCurrentAccount, {
-  maxAge: 60 * 1000, // 1 minute
+  expires: 60 * 1000, // 1 minute
 });
 
 export function getCurrentAccountNS() {
@@ -110,6 +110,7 @@ export function saveAccount(account) {
     acc.instanceURL = account.instanceURL;
     acc.accessToken = account.accessToken;
     acc.vapidKey = account.vapidKey;
+    acc.updatedAt = Date.now();
   } else {
     accounts.push(account);
   }
