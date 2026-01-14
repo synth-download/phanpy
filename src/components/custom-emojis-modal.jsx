@@ -86,30 +86,7 @@ const CustomEmojisList = memo(({ emojis, onSelect, category }) => {
   const [max, setMax] = useState(CUSTOM_EMOJIS_COUNT);
   const showMore = emojis.length > max;
 
-  const defaultCats = {
-    '--recent--': t`Recently used`,
-    '--others--': t`Others`,
-    '--smileys-emotion--': t`Smileys`,
-    '--people-body--': t`People & Body`,
-    '--component--': t`Components`,
-    '--animals-nature--': t`Animals & Nature`,
-    '--food-drink--': t`Food & Drink`,
-    '--travel-places--': t`Travel & Places`,
-    '--activities--': t`Activities`,
-    '--objects--': t`Objects`,
-    '--symbols--': t`Symbols`,
-    '--flags--': t`Flags`
-  }
-
   return (
-    <details>
-      <summary className="section-header">
-        {(emojis) && (
-          !emojis[0].unicode ?
-          <CustomEmoji url={emojis[0].url} staticUrl={emojis[0].staticUrl} alt={emojis[0].shortcode}/> :
-          <span>{emojis[0].unicode}</span>
-        )} {defaultCats[category] || category}
-      </summary>
       <div className='emoji-grid'>
         {emojis.slice(0, max).map((emoji) => (
           <CustomEmojiButton
@@ -130,7 +107,6 @@ const CustomEmojisList = memo(({ emojis, onSelect, category }) => {
           </button>
         )}
       </div>
-    </details>
   );
 });
 
@@ -291,6 +267,21 @@ function CustomEmojisModal({
 
   const hasCustomEmojis = !!customEmojis?.length;
 
+  const defaultCats = {
+    '--recent--': t`Recently used`,
+    '--others--': t`Others`,
+    '--smileys-emotion--': t`Smileys`,
+    '--people-body--': t`People & Body`,
+    '--component--': t`Components`,
+    '--animals-nature--': t`Animals & Nature`,
+    '--food-drink--': t`Food & Drink`,
+    '--travel-places--': t`Travel & Places`,
+    '--activities--': t`Activities`,
+    '--objects--': t`Objects`,
+    '--symbols--': t`Symbols`,
+    '--flags--': t`Flags`
+  }
+
   return (
     <div
       id="custom-emojis-sheet"
@@ -371,18 +362,19 @@ function CustomEmojisModal({
                   Object.entries(customEmojisCatList).map(
                     ([category, emojis]) =>
                       !!emojis?.length && (
-                        <div class="section-container">
-                          <div class="section-header">
-                            {{
-                              '--recent--': t`Recently used`,
-                              '--others--': t`Others`,
-                            }[category] || category}
-                          </div>
+                        <details class="section-container">
+                          <summary className="section-header">
+                            {(emojis) && (
+                              !emojis[0].unicode ?
+                              <CustomEmoji url={emojis[0].url} staticUrl={emojis[0].staticUrl} alt={emojis[0].shortcode}/> :
+                              <span>{emojis[0].unicode}</span>
+                            )} {defaultCats[category] || category}
+                          </summary>
                           <CustomEmojisList
                             emojis={emojis}
                             onSelect={onSelectEmoji}
                           />
-                        </div>
+                        </details>
                       ),
                   )}
               </div>

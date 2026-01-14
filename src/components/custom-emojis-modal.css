@@ -77,6 +77,7 @@
         background-color: var(--bg-color);
         z-index: 1;
         display: list-item;
+        list-style-position: inside;
         padding-inline-end: 8px;
         cursor: pointer;
         border-end-end-radius: 8px;
