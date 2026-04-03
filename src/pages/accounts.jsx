@@ -15,6 +15,7 @@ import NameText from '../components/name-text';
 import RelativeTime from '../components/relative-time';
 import { api } from '../utils/api';
 import { revokeAccessToken } from '../utils/auth';
+import haptics from '../utils/haptics';
 import niceDateTime from '../utils/nice-date-time';
 import states from '../utils/states';
 import store from '../utils/store';
@@ -57,6 +58,26 @@ function Accounts({ onClose }) {
               const isCurrent = account.info.id === currentAccount;
               const isDefault = i === 0; // first account is always default
               const isLoggedOut = !account.accessToken;
+
+              const removeAccount = () => {
+                accounts.splice(i, 1);
+                saveAccounts(accounts);
+                try {
+                  if (store.session.get('currentAccount') === account.info.id) {
+                    store.session.del('currentAccount');
+                  }
+                } catch (e) {}
+              };
+
+              const logOutAccount = async () => {
+                await revokeAccessToken({
+                  instanceURL: account.instanceURL,
+                  client_id: account.clientId,
+                  client_secret: account.clientSecret,
+                  token: account.accessToken,
+                });
+              };
+
               return (
                 <li key={account.info.id}>
                   <div>
@@ -95,6 +116,7 @@ function Accounts({ onClose }) {
                       }
                       showAcct
                       onClick={() => {
+                        haptics.trigger('medium');
                         if (isLoggedOut) {
                           location.href = `/#/login?instance=${account.instanceURL}`;
                           onClose();
@@ -215,53 +237,85 @@ function Accounts({ onClose }) {
                           <MenuDivider />
                         </>
                       )}
-                      <MenuConfirm
-                        subMenu
-                        confirmLabel={
-                          <>
-                            <Icon icon="exit" />
-                            <span>
-                              <Trans>
-                                Log out{' '}
-                                <span class="bidi-isolate">
-                                  @{account.info.acct}
-                                </span>
-                                ?
-                              </Trans>
-                            </span>
-                          </>
-                        }
-                        disabled={!isCurrent || isLoggedOut}
-                        menuItemClassName="danger"
-                        onClick={async () => {
-                          // const yes = confirm('Log out?');
-                          // if (!yes) return;
-                          await revokeAccessToken({
-                            instanceURL: account.instanceURL,
-                            client_id: account.clientId,
-                            client_secret: account.clientSecret,
-                            token: account.accessToken,
-                          });
-                          accounts.splice(i, 1);
-                          saveAccounts(accounts);
-                          // location.reload();
-                          try {
-                            // Clean up session currentAccount if same as deleted
-                            if (
-                              store.session.get('currentAccount') ===
-                              account.info.id
-                            ) {
-                              store.session.del('currentAccount');
-                            }
-                          } catch (e) {}
-                          location.href = location.pathname || '/';
-                        }}
-                      >
-                        <Icon icon="exit" />
-                        <span>
-                          <Trans>Log out…</Trans>
-                        </span>
-                      </MenuConfirm>
+                      {!isLoggedOut ? (
+                        <MenuConfirm
+                          subMenu
+                          confirmLabel={
+                            <>
+                              <Icon icon="exit" />
+                              <span>
+                                <Trans>
+                                  Log out{' '}
+                                  <span class="bidi-isolate">
+                                    @{account.info.acct}
+                                  </span>
+                                  ?
+                                </Trans>
+                              </span>
+                            </>
+                          }
+                          menuItemClassName="danger"
+                          onClick={async () => {
+                            await logOutAccount();
+                            delete account.accessToken;
+                            saveAccounts(accounts);
+                            reload();
+                          }}
+                          menuExtras={
+                            <MenuItem
+                              className="danger"
+                              onClick={async () => {
+                                await logOutAccount();
+                                removeAccount();
+                                location.href = location.pathname || '/';
+                              }}
+                            >
+                              <Icon icon="x" />
+                              <span>
+                                <Trans>
+                                  Log out and remove{' '}
+                                  <span class="bidi-isolate">
+                                    @{account.info.acct}
+                                  </span>
+                                </Trans>
+                              </span>
+                            </MenuItem>
+                          }
+                        >
+                          <Icon icon="exit" />
+                          <span>
+                            <Trans>Log out…</Trans>
+                          </span>
+                        </MenuConfirm>
+                      ) : (
+                        <MenuConfirm
+                          subMenu
+                          confirmLabel={
+                            <>
+                              <Icon icon="x" />
+                              <span>
+                                <Trans>
+                                  Remove{' '}
+                                  <span class="bidi-isolate">
+                                    @{account.info.acct}
+                                  </span>
+                                  ?
+                                </Trans>
+                              </span>
+                            </>
+                          }
+                          menuItemClassName="danger"
+                          onClick={() => {
+                            removeAccount();
+                            reload();
+                          }}
+                        >
+                          <Icon icon="x" />
+                          <span>
+                            <Trans>Remove account…</Trans>
+                          </span>
+                        </MenuConfirm>
+                      )}
                       {!!account?.createdAt && (
                         <div class="footer">
                           <Icon icon="account-add" />

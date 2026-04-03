@@ -27,12 +27,13 @@ const NOTIFICATION_ICONS = {
   favourite: 'heart',
   poll: 'poll',
   update: 'pencil',
-  'admin.signup': 'account-edit',
+  'admin.sign_up': 'account-edit',
   'admin.report': 'account-warning',
   severed_relationships: 'heart-break',
   moderation_warning: 'alert',
   reaction: 'emoji2',
   emoji_reaction: 'emoji2',
+  reaction: 'emoji2',
   'pleroma:emoji_reaction': 'emoji2',
   annual_report: 'celebrate',
   quote: 'quote',
@@ -58,14 +59,14 @@ quote = Someone quoted one of your statuses
 quoted_update = A status you have quoted has been edited
 */
 
-function emojiText({ account, count, emoji, emoji_url }) {
+function emojiText({ account, count, emoji, emojiURL }) {
   let url;
   let staticUrl;
-  if (typeof emoji_url === 'string') {
-    url = emoji_url;
+  if (typeof emojiURL === 'string') {
+    url = emojiURL;
   } else {
-    url = emoji_url?.url;
-    staticUrl = emoji_url?.staticUrl;
+    url = emojiURL?.url;
+    staticUrl = emojiURL?.staticUrl;
   }
 
   if (!emoji && count) {
@@ -267,7 +268,20 @@ const contentText = {
   quoted_update: ({ account }) => (
     <Trans>{account} edited a post you have quoted.</Trans>
   ),
-  'admin.sign_up': ({ account }) => <Trans>{account} signed up.</Trans>,
+  'admin.sign_up': ({ account, count, components: { Subject } }) => (
+    <Plural
+      value={count}
+      _1={<Trans>{account} signed up.</Trans>}
+      other={
+        <Trans>
+          <Subject clickable={count > 1}>
+            <span title={count}>{shortenNumber(count)}</span> people
+          </Subject>{' '}
+          signed up.
+        </Trans>
+      }
+    />
+  ),
   'admin.report': ({ account, targetAccount }) => (
     <Trans>
       {account} reported {targetAccount}
@@ -284,7 +298,7 @@ const contentText = {
     </b>
   ),
   reaction: ({account, count, reaction: { name, url, staticUrl }}) => {
-    return emojiText({account, count, emoji: name, emoji_url: staticUrl ? {url, staticUrl} : url})
+    return emojiText({account, count, emoji: name, emojiURL: staticUrl ? {url, staticUrl} : url})
   },
   emoji_reaction: emojiText,
   'pleroma:emoji_reaction': emojiText,
@@ -413,7 +427,8 @@ function Notification({
 
   if (typeof text === 'function') {
     const count =
-      (type === 'favourite' || type === 'reblog' || type === 'reaction') && notificationsCount
+      (type === 'favourite' || type === 'reblog' || type === 'admin.sign_up' || type === 'reaction') &&
+      notificationsCount
         ? diffCount
           ? notificationsCount
           : sampleAccounts?.length
@@ -491,14 +506,63 @@ function Notification({
       reblog: t`Boosted by…`,
       follow: t`Followed by…`,
     }[type] || t`Accounts`;
+  const showRemoteAccounts =
+    (type === 'favourite+reblog' ||
+      type === 'favourite' ||
+      type === 'reblog' ||
+      type === 'admin.sign_up') &&
+    expandAccounts === 'remote';
   const handleOpenGenericAccounts = () => {
-    states.showGenericAccounts = {
-      heading: genericAccountsHeading,
-      accounts: _accounts,
-      showReactions: type === 'favourite+reblog',
-      excludeRelationshipAttrs: type === 'follow' ? ['followedBy'] : [],
-      postID: statusKey(actualStatusID, instance),
-    };
+    if (showRemoteAccounts) {
+      states.showGenericAccounts = {
+        heading: genericAccountsHeading,
+        accounts: _accounts,
+        fetchAccounts: async () => {
+          const keyAccounts = await Promise.allSettled(
+            _groupKeys.map(async (gKey) => {
+              const iterator = masto.v2.notifications
+                .$select(gKey)
+                .accounts.list()
+                .values();
+              return [gKey, (await iterator.next()).value];
+            }),
+          );
+          const accounts = [];
+          for (const keyAccount of keyAccounts) {
+            const [key, _accounts] = keyAccount.value;
+            const type = /^favourite/.test(key)
+              ? 'favourite'
+              : /^reblog/.test(key)
+                ? 'reblog'
+                : null;
+            // if (!type) continue;
+            for (const account of _accounts) {
+              const theAccount = accounts.find((a) => a.id === account.id);
+              if (theAccount && type) {
+                theAccount._types.push(type);
+              } else {
+                if (type) account._types = [type];
+                accounts.push(account);
+              }
+            }
+          }
+          return {
+            done: true,
+            value: accounts,
+          };
+        },
+        showReactions: type === 'favourite+reblog',
+        postID: statusKey(actualStatusID, instance),
+      };
+    } else {
+      states.showGenericAccounts = {
+        heading: genericAccountsHeading,
+        accounts: _accounts,
+        showReactions: type === 'favourite+reblog',
+        excludeRelationshipAttrs: type === 'follow' ? ['followedBy'] : [],
+        postID: statusKey(actualStatusID, instance),
+      };
+    }
   };
 
   console.debug('RENDER Notification', notification.id);
@@ -512,12 +576,21 @@ function Notification({
     }
   }
 
+  const debugHover = (e) => {
+    if (e.shiftKey) {
+      console.log({
+        ...notification,
+      });
+    }
+  };
+
   return (
     <div
       class={`notification notification-${type}`}
       data-notification-id={_ids || id}
       data-group-key={_groupKeys?.join(' ') || groupKey}
       tabIndex="0"
+      onMouseEnter={debugHover}
     >
       <div
         class={`notification-type notification-${type}`}
@@ -647,62 +720,18 @@ function Notification({
                 </a>{' '}
               </Fragment>
             ))}
-            {(type === 'favourite+reblog' ||
-              type === 'favourite' ||
-              type === 'reblog' ||
-              type === 'reaction') &&
-            expandAccounts === 'remote' ? (
+            {showRemoteAccounts ? (
               <button
                 type="button"
                 class="small plain"
                 data-group-keys={_groupKeys?.join(' ')}
-                onClick={() => {
-                  states.showGenericAccounts = {
-                    heading: genericAccountsHeading,
-                    accounts: _accounts,
-                    fetchAccounts: async () => {
-                      const keyAccounts = await Promise.allSettled(
-                        _groupKeys.map(async (gKey) => {
-                          const iterator = masto.v2.notifications
-                            .$select(gKey)
-                            .accounts.list()
-                            .values();
-                          return [gKey, (await iterator.next()).value];
-                        }),
-                      );
-                      const accounts = [];
-                      for (const keyAccount of keyAccounts) {
-                        const [key, _accounts] = keyAccount.value;
-                        const type = /^favourite/.test(key)
-                          ? 'favourite'
-                          : /^reblog/.test(key)
-                            ? 'reblog'
-                            : null;
-                        if (!type) continue;
-                        for (const account of _accounts) {
-                          const theAccount = accounts.find(
-                            (a) => a.id === account.id,
-                          );
-                          if (theAccount) {
-                            theAccount._types.push(type);
-                          } else {
-                            account._types = [type];
-                            accounts.push(account);
-                          }
-                        }
-                      }
-                      return {
-                        done: true,
-                        value: accounts,
-                      };
-                    },
-                    showReactions: type === 'favourite+reblog',
-                    postID: statusKey(actualStatusID, instance),
-                  };
-                }}
+                onClick={handleOpenGenericAccounts}
               >
                 +
-                {(type === 'favourite' || type === 'reblog' || type === 'reaction') &&
+                {(type === 'favourite' ||
+                  type === 'reblog' ||
+                  type === 'admin.sign_up' || 
+                  type === 'reaction') &&
                   notificationsCount - _accounts.length}
                 <Icon icon="chevron-down" />
               </button>
@@ -754,7 +783,7 @@ function Notification({
                 </a>{' '}
               </Fragment>
             ))}
-            {notificationsCount > sampleAccounts.length && (
+            {notificationsCount > sampleAccounts.length && status?.id && (
               <Link
                 to={
                   instance ? `/${instance}/s/${status.id}` : `/s/${status.id}`
