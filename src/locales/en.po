@@ -1919,10 +1919,6 @@ msgstr ""
 msgid "Notes"
 msgstr "Notes"
 
-#: src/components/private-note-sheet.jsx:41
-#~ msgid "Private note about <0>@{0}</0>"
-#~ msgstr ""
-
 #: src/components/private-note-sheet.jsx:44
 msgid "Only visible to you"
 msgstr "Only visible to you"
@@ -2021,10 +2017,6 @@ msgstr ""
 msgid "Last post: <0>{0}</0>"
 msgstr ""
 
-#: src/components/related-actions.jsx:214
-#~ msgid "Private note"
-#~ msgstr "Private note"
-
 #: src/components/related-actions.jsx:218
 msgid "Muted"
 msgstr ""
@@ -2032,14 +2024,6 @@ msgstr ""
 #: src/components/related-actions.jsx:223
 msgid "Blocked"
 msgstr ""
-
-#: src/components/related-actions.jsx:294
-#~ msgid "Edit private note"
-#~ msgstr "Edit private note"
-
-#: src/components/related-actions.jsx:294
-#~ msgid "Add private note"
-#~ msgstr "Add private note"
 
 #: src/components/related-actions.jsx:306
 msgid "Mention <0>@{username}</0>"
@@ -2356,10 +2340,6 @@ msgstr ""
 msgid "Accounts with <0>{query}</0>"
 msgstr ""
 
-#: src/components/search-form.jsx:34
-#~ msgid "Posts tagged with <0>#{0}</0>"
-#~ msgstr ""
-
 #: src/components/search-form.jsx:37
 msgid "Posts tagged with <0>{hashtag}</0>"
 msgstr "Posts tagged with <0>{hashtag}</0>"
@@ -2400,13 +2380,6 @@ msgstr ""
 #: src/components/shortcuts-settings.jsx:73
 msgid "Local only"
 msgstr ""
-
-#: src/components/shortcuts-settings.jsx:75
-#: src/components/shortcuts-settings.jsx:84
-#: src/components/shortcuts-settings.jsx:122
-#: src/pages/login.jsx:203
-#~ msgid "Instance"
-#~ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:78
 #: src/components/shortcuts-settings.jsx:87
@@ -2552,17 +2525,9 @@ msgstr ""
 msgid "Import/Export <0>Shortcuts</0>"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:822
-#~ msgid "Downloading saved shortcuts from instance server…"
-#~ msgstr ""
-
 #: src/components/shortcuts-settings.jsx:824
 msgid "Paste shortcuts here"
 msgstr ""
-
-#: src/components/shortcuts-settings.jsx:854
-#~ msgid "Download shortcuts from instance server"
-#~ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:860
 msgid "Downloading saved shortcuts from server…"
@@ -2637,17 +2602,9 @@ msgstr ""
 msgid "Unable to copy shortcuts"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:1122
-#~ msgid "Saving shortcuts to instance server…"
-#~ msgstr ""
-
 #: src/components/shortcuts-settings.jsx:1136
 msgid "Saving shortcuts to server…"
 msgstr "Saving shortcuts to server…"
-
-#: src/components/shortcuts-settings.jsx:1137
-#~ msgid "Sync to instance server"
-#~ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:1143
 msgid "Shortcuts saved"
@@ -2668,10 +2625,6 @@ msgstr ""
 #: src/components/shortcuts-settings.jsx:1169
 msgid "Unable to copy shortcut settings"
 msgstr ""
-
-#: src/components/shortcuts-settings.jsx:1170
-#~ msgid "Import/export settings from/to instance server (Very experimental)"
-#~ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:1199
 msgid "Share"
@@ -2720,10 +2673,6 @@ msgstr "Post unavailable"
 #: src/components/status.jsx:633
 msgid "<0/> <1>boosted</1>"
 msgstr "<0/> <1>boosted</1>"
-
-#: src/components/status.jsx:693
-#~ msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
-#~ msgstr ""
 
 #: src/components/status.jsx:740
 msgid "Sorry, your current logged-in server can't interact with this post from another server."
@@ -3257,19 +3206,11 @@ msgstr "Showing posts in {0}"
 msgid "Search @{0}'s posts"
 msgstr "Search @{0}'s posts"
 
-#: src/pages/account-statuses.jsx:570
-#~ msgid "Switch to account's instance {0}"
-#~ msgstr ""
-
 #: src/pages/account-statuses.jsx:593
 #: src/pages/search.jsx:359
 #: src/pages/search.jsx:506
 msgid "Posts"
 msgstr ""
-
-#: src/pages/account-statuses.jsx:600
-#~ msgid "Switch to my instance (<0>{currentInstance}</0>)"
-#~ msgstr ""
 
 #: src/pages/account-statuses.jsx:618
 msgid "Nothing to see here yet."
@@ -3444,10 +3385,6 @@ msgstr ""
 #: src/pages/catchup.jsx:1735
 msgid "Help"
 msgstr ""
-
-#: src/pages/catchup.jsx:1047
-#~ msgid "Note: your instance might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
-#~ msgstr ""
 
 #: src/pages/catchup.jsx:1063
 msgid "What is this?"
@@ -3953,17 +3890,9 @@ msgstr ""
 msgid "Failed to register application"
 msgstr "Failed to register application"
 
-#: src/pages/login.jsx:218
-#~ msgid "instance domain"
-#~ msgstr "instance domain"
-
 #: src/pages/login.jsx:246
 msgid "server domain"
 msgstr "server domain"
-
-#: src/pages/login.jsx:253
-#~ msgid "Failed to log in. Please try again or try another instance."
-#~ msgstr ""
 
 #: src/pages/login.jsx:271
 msgid "e.g. “mastodon.social”"
@@ -4311,10 +4240,6 @@ msgstr "Default visibility updated"
 msgid "Failed to update default visibility"
 msgstr "Failed to update default visibility"
 
-#: src/pages/settings.jsx:316
-#~ msgid "Failed to update posting privacy"
-#~ msgstr ""
-
 #: src/pages/settings.jsx:358
 msgid "Synced to your server's settings. <0>Go to your server ({instance}) for more settings.</0>"
 msgstr "Synced to your server's settings. <0>Go to your server ({instance}) for more settings.</0>"
@@ -4330,10 +4255,6 @@ msgstr ""
 #: src/pages/settings.jsx:398
 msgid "Boosts carousel"
 msgstr ""
-
-#: src/pages/settings.jsx:398
-#~ msgid "Synced to your instance server's settings. <0>Go to your instance ({instance}) for more settings.</0>"
-#~ msgstr ""
 
 #: src/pages/settings.jsx:415
 msgid "Post translation"
@@ -4400,14 +4321,6 @@ msgstr ""
 msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
 msgstr ""
 
-#: src/pages/settings.jsx:682
-#~ msgid "Server-side grouped notifications"
-#~ msgstr ""
-
-#: src/pages/settings.jsx:686
-#~ msgid "Alpha-stage feature. Potentially improved grouping window but basic grouping logic."
-#~ msgstr ""
-
 #: src/pages/settings.jsx:690
 msgid "Note: This feature uses currently-logged-in server API."
 msgstr "Note: This feature uses currently-logged-in server API."
@@ -4419,10 +4332,6 @@ msgstr ""
 #: src/pages/settings.jsx:715
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
 msgstr ""
-
-#: src/pages/settings.jsx:723
-#~ msgid "Note: This feature uses currently-logged-in instance server API."
-#~ msgstr ""
 
 #: src/pages/settings.jsx:744
 msgid "Install {CLIENT_NAME}"
@@ -4537,14 +4446,6 @@ msgstr ""
 msgid "post.title"
 msgstr "Post"
 
-#: src/pages/status.jsx:1007
-#~ msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
-#~ msgstr ""
-
-#: src/pages/status.jsx:1042
-#~ msgid "Switch to my instance to enable interactions"
-#~ msgstr ""
-
 #: src/pages/status.jsx:1088
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
 msgstr ""
@@ -4585,14 +4486,6 @@ msgstr ""
 #: src/pages/status.jsx:1499
 msgid "{0} posts above ‒ Go to top"
 msgstr ""
-
-#: src/pages/status.jsx:1543
-#~ msgid "Switch to post's instance ({0})"
-#~ msgstr "Switch to post's instance ({0})"
-
-#: src/pages/status.jsx:1546
-#~ msgid "Switch to post's instance"
-#~ msgstr ""
 
 #: src/pages/status.jsx:1548
 #: src/pages/status.jsx:1611
@@ -4721,18 +4614,6 @@ msgstr "Screenshot of Catch-up"
 #: src/pages/welcome.jsx:157
 msgid "A separate timeline for followings. Email-inspired interface to sort and filter posts."
 msgstr "A separate timeline for followings. Email-inspired interface to sort and filter posts."
-
-#: src/pages/welcome.jsx:157
-#~ msgid "Screenshot of grouped notifications"
-#~ msgstr ""
-
-#: src/pages/welcome.jsx:161
-#~ msgid "Grouped notifications"
-#~ msgstr ""
-
-#: src/pages/welcome.jsx:164
-#~ msgid "Similar notifications are grouped and collapsed to reduce clutter."
-#~ msgstr ""
 
 #: src/pages/welcome.jsx:167
 msgid "Screenshot of nested comments thread"
