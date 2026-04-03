@@ -710,7 +710,7 @@ msgstr "Наблизити"
 
 #: src/components/custom-emojis-modal.jsx:404
 msgid "Custom emojis are not available on this server."
-msgstr "Користувацькі емодзі не доступні на цьому сервері."
+msgstr ""
 
 #: src/components/drafts.jsx:62
 #: src/pages/settings.jsx:732
