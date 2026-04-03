@@ -9,6 +9,7 @@
   z-index: 101;
   transition: all 0.3s ease-in-out;
   border: var(--hairline-width) solid var(--bg-color);
+  box-shadow: 0 3px 8px -1px var(--drop-shadow-color);
 
   body.exp-tab-bar-v2 & {
     box-shadow:
@@ -62,8 +63,7 @@ body.exp-tab-bar-v2 {
   --tmp-inset-sides: max(var(--sai-left), var(--sai-right), 16px);
   --tmp-inset-bottom: max(16px, var(--sai-bottom));
   --tmp-inset-new: calc(
-    (var(--tmp-inset-sides) + var(--tmp-inset-bottom)) /
-    2.4
+    (var(--tmp-inset-sides) + var(--tmp-inset-bottom)) / 2.4
   );
   --inset-new: var(--tmp-inset-new);
 }
@@ -96,11 +96,8 @@ body.exp-tab-bar-v2 {
     inset-inline-start: var(--inset-inline-start);
     inset-block-end: max(16px, var(--inset-new));
     max-width: calc(
-      100vw -
-      var(--inset-inline-start) -
-      var(--inset-inline-end) -
-      var(--compose-button-width) -
-      8px
+      100vw - var(--inset-inline-start) - var(--inset-inline-end) -
+        var(--compose-button-width) - 8px
     );
     border-radius: 999px;
     box-shadow:
@@ -121,9 +118,7 @@ body.exp-tab-bar-v2 {
   #filters-page ~ #shortcuts .tab-bar:not([hidden]),
   #lists-page ~ #shortcuts .tab-bar:not([hidden]) {
     max-width: calc(
-      100vw -
-      var(--inset-inline-start) -
-      var(--inset-inline-end)
+      100vw - var(--inset-inline-start) - var(--inset-inline-end)
     );
   }
 }
@@ -239,6 +234,12 @@ body.exp-tab-bar-v2 {
     transform: scale(1);
     opacity: 1;
   }
+
+  .avatar,
+  .shortcut-icon {
+    outline: 2px solid var(--link-color);
+    outline-offset: -2px;
+  }
 }
 #app:has(#home-page):not(:has(#home-page ~ .deck-container)):has(header[hidden])
   #shortcuts
@@ -248,6 +249,14 @@ shortcuts .tab-bar[hidden] {
   transform: translateY(200%);
   pointer-events: none;
   user-select: none;
+}
+
+#shortcuts .shortcut-icon {
+  border-radius: 9999px;
+  overflow: hidden;
+  object-fit: cover;
+  flex-shrink: 0;
+  vertical-align: middle;
 }
 
 @media (max-width: calc(40em - 1px)) {
