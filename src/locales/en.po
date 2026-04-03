@@ -1919,6 +1919,10 @@ msgstr ""
 msgid "Notes"
 msgstr "Notes"
 
+#: src/components/private-note-sheet.jsx:41
+#~ msgid "Private note about <0>@{0}</0>"
+#~ msgstr ""
+
 #: src/components/private-note-sheet.jsx:44
 msgid "Only visible to you"
 msgstr "Only visible to you"
@@ -2017,6 +2021,10 @@ msgstr ""
 msgid "Last post: <0>{0}</0>"
 msgstr ""
 
+#: src/components/related-actions.jsx:214
+#~ msgid "Private note"
+#~ msgstr "Private note"
+
 #: src/components/related-actions.jsx:218
 msgid "Muted"
 msgstr ""
@@ -2024,6 +2032,14 @@ msgstr ""
 #: src/components/related-actions.jsx:223
 msgid "Blocked"
 msgstr ""
+
+#: src/components/related-actions.jsx:294
+#~ msgid "Edit private note"
+#~ msgstr "Edit private note"
+
+#: src/components/related-actions.jsx:294
+#~ msgid "Add private note"
+#~ msgstr "Add private note"
 
 #: src/components/related-actions.jsx:306
 msgid "Mention <0>@{username}</0>"
@@ -2340,6 +2356,10 @@ msgstr ""
 msgid "Accounts with <0>{query}</0>"
 msgstr ""
 
+#: src/components/search-form.jsx:34
+#~ msgid "Posts tagged with <0>#{0}</0>"
+#~ msgstr ""
+
 #: src/components/search-form.jsx:37
 msgid "Posts tagged with <0>{hashtag}</0>"
 msgstr "Posts tagged with <0>{hashtag}</0>"
@@ -2602,9 +2622,17 @@ msgstr ""
 msgid "Unable to copy shortcuts"
 msgstr ""
 
+#: src/components/shortcuts-settings.jsx:1122
+#~ msgid "Saving shortcuts to instance server…"
+#~ msgstr ""
+
 #: src/components/shortcuts-settings.jsx:1136
 msgid "Saving shortcuts to server…"
 msgstr "Saving shortcuts to server…"
+
+#: src/components/shortcuts-settings.jsx:1137
+#~ msgid "Sync to instance server"
+#~ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:1143
 msgid "Shortcuts saved"
