@@ -13,6 +13,7 @@ import supportedLanguages from '../data/status-supported-languages';
 import { api, getPreferences } from '../utils/api';
 import db from '../utils/db';
 import { getDtfLocale } from '../utils/dtf-locale';
+import haptics from '../utils/haptics';
 import localeMatch from '../utils/locale-match';
 import localeCode2Text from '../utils/localeCode2Text';
 import mem from '../utils/mem';
@@ -75,9 +76,21 @@ const supportedLanguagesMap = supportedLanguages.reduce((acc, l) => {
   return acc;
 }, {});
 
+// Convert camelCase to kebab-case for language codes
+// e.g., "mnMong" → "mn-Mong", "msArab" → "ms-Arab"
+const camelToKebabCase = (str) => {
+  return str.replace(/([a-z])([A-Z])/g, '$1-$2');
+};
+
 /* NOTES:
   - Max character limit includes BOTH status text and Content Warning text
 */
+
+// Detect devices that can't open proper custom-sized windows
+// (Android phones/tablets, iOS devices, but not Chromebooks)
+const isPopOutNotSupported =
+  /Android|iPhone|iPad|iPod/.test(navigator.userAgent) &&
+  !/CrOS/.test(navigator.userAgent);
 
 const expirySeconds = Object.keys(expiryOptions);
 const oneDay = 24 * 60 * 60;
@@ -134,6 +147,17 @@ function isMimeTypeSupported(fileType, supportedMimeTypes) {
   return !!subTypeMap[subtype];
 }
 
+function fixLanguage(language) {
+  if (!language || typeof language !== 'string') return null;
+  // If inside list, return it, else fix it
+  if (supportedLanguagesMap[language]) return language;
+  const fixedLanguage = camelToKebabCase(language);
+  if (supportedLanguagesMap[fixedLanguage]) {
+    return fixedLanguage;
+  }
+  return null;
+}
+
 function Compose({
   onClose,
   replyToStatus,
@@ -143,6 +167,7 @@ function Compose({
   quoteStatus,
   standalone,
   hasOpener,
+  sharedData,
 }) {
   const { i18n, _, t } = useLingui();
   const rtf = RTF(i18n.locale);
@@ -234,6 +259,59 @@ function Compose({
     } else {
       return false;
     }
+  };
+
+  const processFiles = async (files) => {
+    const supportedFiles = [];
+    const unsupportedFiles = [];
+    for (const file of files || []) {
+      if (!isMimeTypeSupported(file.type, supportedMimeTypes)) {
+        unsupportedFiles.push(file);
+      } else {
+        supportedFiles.push(file);
+      }
+    }
+
+    if (unsupportedFiles.length > 0) {
+      alert(
+        plural(unsupportedFiles.length, {
+          one: `File ${unsupportedFiles[0].name} is not supported.`,
+          other: `Files ${lf.format(
+            unsupportedFiles.map((f) => f.name),
+          )} are not supported.`,
+        }),
+      );
+    }
+
+    if (supportedFiles.length > 0) {
+      // Auto-cut-off files to avoid exceeding maxMediaAttachments
+      let allowedFiles = supportedFiles;
+      if (maxMediaAttachments !== undefined) {
+        const max = maxMediaAttachments - mediaAttachments.length;
+        if (max <= 0) {
+          alert(
+            plural(maxMediaAttachments, {
+              one: 'You can only attach up to 1 file.',
+              other: 'You can only attach up to # files.',
+            }),
+          );
+          return;
+        }
+        allowedFiles = allowedFiles.slice(0, max);
+      }
+      return Promise.all(
+        allowedFiles.map(async (file) => ({
+          fileData: await file.arrayBuffer(),
+          fileName: file.name,
+          type: file.type,
+          size: file.size,
+          url: URL.createObjectURL(file),
+          id: null,
+          description: null,
+        })),
+      );
+    }
+    return null;
   };
 
   const handlePastedLink = async (url) => {
@@ -422,7 +500,7 @@ function Compose({
           : visibility,
       );
       setLanguage(
-        language ||
+        fixLanguage(language) ||
           prefs['posting:default:language']?.toLowerCase() ||
           DEFAULT_LANG,
       );
@@ -536,6 +614,29 @@ function Compose({
       if (quoteApprovalPolicy) setQuoteApprovalPolicy(quoteApprovalPolicy);
     }
   }, [draftStatus, editStatus, replyToStatus, replyMode]);
+
+  useEffect(() => {
+    if (sharedData) {
+      const { initialText, files } = sharedData;
+
+      if (initialText && textareaRef.current) {
+        textareaRef.current.value = initialText;
+        oninputTextarea();
+      }
+
+      if (files && files.length > 0) {
+        processFiles(files)
+          .then((mediaFiles) => {
+            if (mediaFiles) {
+              setMediaAttachments(mediaFiles);
+            }
+          })
+          .catch((err) => {
+            console.error('Failed to process file(s):', err);
+          });
+      }
+    }
+  }, [sharedData]);
 
   // focus textarea when state.composerState.minimized turns false
   const snapStates = useSnapshot(states);
@@ -779,65 +880,24 @@ function Compose({
 
       const { items } = e.clipboardData || e.dataTransfer;
       const files = [];
-      const unsupportedFiles = [];
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
         if (item.kind === 'file') {
-          const file = item.getAsFile();
-          if (!isMimeTypeSupported(file.type, supportedMimeTypes)) {
-            unsupportedFiles.push(file);
-          } else {
-            files.push(file);
-          }
+          files.push(item.getAsFile());
         }
       }
-      if (unsupportedFiles.length > 0) {
-        alert(
-          plural(unsupportedFiles.length, {
-            one: `File ${unsupportedFiles[0].name} is not supported.`,
-            other: `Files ${lf.format(
-              unsupportedFiles.map((f) => f.name),
-            )} are not supported.`,
-          }),
-        );
-      }
-      if (files.length > 0 && mediaAttachments.length >= maxMediaAttachments) {
-        alert(
-          plural(maxMediaAttachments, {
-            one: 'You can only attach up to 1 file.',
-            other: 'You can only attach up to # files.',
-          }),
-        );
-        return;
-      }
-      console.log({ files });
       if (files.length > 0) {
         e.preventDefault();
         e.stopPropagation();
-        // Auto-cut-off files to avoid exceeding maxMediaAttachments
-        let allowedFiles = files;
-        if (maxMediaAttachments !== undefined) {
-          const max = maxMediaAttachments - mediaAttachments.length;
-          allowedFiles = allowedFiles.slice(0, max);
-          if (allowedFiles.length <= 0) {
-            alert(
-              plural(maxMediaAttachments, {
-                one: 'You can only attach up to 1 file.',
-                other: 'You can only attach up to # files.',
-              }),
-            );
-            return;
-          }
-        }
-        const mediaFiles = allowedFiles.map((file) => ({
-          file,
-          type: file.type,
-          size: file.size,
-          url: URL.createObjectURL(file),
-          id: null,
-          description: null,
-        }));
-        setMediaAttachments([...mediaAttachments, ...mediaFiles]);
+        processFiles(files)
+          .then((mediaFiles) => {
+            if (mediaFiles) {
+              setMediaAttachments((prev) => [...prev, ...mediaFiles]);
+            }
+          })
+          .catch((err) => {
+            console.error('Failed to process file(s):', err);
+          });
       }
     };
     window.addEventListener('paste', handleItems);
@@ -997,54 +1057,56 @@ function Compose({
           )}
           {!standalone ? (
             <span class="compose-controls">
-              <button
-                type="button"
-                class="plain4 pop-button"
-                disabled={uiState === 'loading'}
-                onClick={() => {
-                  // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
-                  // const containNonIDMediaAttachments =
-                  //   mediaAttachments.length > 0 &&
-                  //   mediaAttachments.some((media) => !media.id);
-                  // if (containNonIDMediaAttachments) {
-                  //   const yes = confirm(
-                  //     'You have media attachments that are not yet uploaded. Opening a new window will discard them and you will need to re-attach them. Are you sure you want to continue?',
-                  //   );
-                  //   if (!yes) {
-                  //     return;
-                  //   }
-                  // }
+              {!isPopOutNotSupported && (
+                <button
+                  type="button"
+                  class="plain4 pop-button"
+                  disabled={uiState === 'loading'}
+                  onClick={() => {
+                    // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
+                    // const containNonIDMediaAttachments =
+                    //   mediaAttachments.length > 0 &&
+                    //   mediaAttachments.some((media) => !media.id);
+                    // if (containNonIDMediaAttachments) {
+                    //   const yes = confirm(
+                    //     'You have media attachments that are not yet uploaded. Opening a new window will discard them and you will need to re-attach them. Are you sure you want to continue?',
+                    //   );
+                    //   if (!yes) {
+                    //     return;
+                    //   }
+                    // }
 
-                  // const mediaAttachmentsWithIDs = mediaAttachments.filter(
-                  //   (media) => media.id,
-                  // );
+                    // const mediaAttachmentsWithIDs = mediaAttachments.filter(
+                    //   (media) => media.id,
+                    // );
 
-                  const newWin = openCompose({
-                    editStatus,
-                    replyToStatus,
-                    draftStatus: {
-                      uid: UID.current,
-                      status: textareaRef.current.value,
-                      spoilerText: spoilerTextRef.current.value,
-                      visibility,
-                      language,
-                      sensitive,
-                      poll,
-                      mediaAttachments,
-                      scheduledAt,
-                    },
-                    quoteStatus: currentQuoteStatus,
-                  });
+                    const newWin = openCompose({
+                      editStatus,
+                      replyToStatus,
+                      draftStatus: {
+                        uid: UID.current,
+                        status: textareaRef.current.value,
+                        spoilerText: spoilerTextRef.current.value,
+                        visibility,
+                        language,
+                        sensitive,
+                        poll,
+                        mediaAttachments,
+                        scheduledAt,
+                      },
+                      quoteStatus: currentQuoteStatus,
+                    });
 
-                  if (!newWin) {
-                    return;
-                  }
+                    if (!newWin) {
+                      return;
+                    }
 
-                  onClose();
-                }}
-              >
-                <Icon icon="popout" alt={t`Pop out`} />
-              </button>
+                    onClose();
+                  }}
+                >
+                  <Icon icon="popout" alt={t`Pop out`} />
+                </button>
+              )}
               <button
                 type="button"
                 class="plain4 min-button"
@@ -1282,14 +1344,19 @@ function Compose({
                 if (mediaAttachments.length > 0) {
                   // Upload media attachments first
                   const mediaPromises = mediaAttachments.map((attachment) => {
-                    const { file, description, id } = attachment;
+                    const { fileData, fileName, file, type, description, id } =
+                      attachment;
                     console.log('UPLOADING', attachment);
                     if (id) {
                       // If already uploaded
                       return attachment;
                     } else {
+                      // Reconstruct File from fileData, or fall back to legacy file object
+                      const fileObj = fileData
+                        ? new File([fileData], fileName || 'upload', { type })
+                        : file;
                       const params = removeNullUndefined({
-                        file,
+                        file: fileObj,
                         description,
                       });
                       return masto.v2.media.create(params).then((res) => {
@@ -1991,7 +2058,7 @@ function Compose({
               }`}
             >
               <span class="icon-text">
-                {supportedLanguagesMap[language]?.native}
+                {supportedLanguagesMap[language]?.native || language}
               </span>
               <select
                 name="language"
@@ -2031,7 +2098,11 @@ function Compose({
                 })}
               </select>
             </label>{' '}
-            <button type="submit" disabled={uiState === 'loading'}>
+            <button
+              type="submit"
+              disabled={uiState === 'loading'}
+              onClick={() => haptics.trigger('medium')}
+            >
               {scheduledAt
                 ? t`Schedule`
                 : replyToStatus
@@ -2127,19 +2198,15 @@ function Compose({
                   const blob = await fetch(url, {
                     referrerPolicy: 'no-referrer',
                   }).then((res) => res.blob());
-                  const file = new File(
-                    [blob],
-                    type === 'video/mp4' ? 'video.mp4' : 'image.gif',
-                    {
-                      type,
-                    },
-                  );
+                  const fileData = await blob.arrayBuffer();
                   const newMediaAttachments = [
                     ...mediaAttachments,
                     {
-                      file,
+                      fileData,
+                      fileName:
+                        type === 'video/mp4' ? 'video.mp4' : 'image.gif',
                       type,
-                      size: file.size,
+                      size: blob.size,
                       id: null,
                       description: alt_text || '',
                     },

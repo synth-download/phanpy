@@ -15,6 +15,7 @@ import store from '../utils/store';
 
 import Icon from './icon';
 import Loader from './loader';
+import CustomEmoji from './custom-emoji';
 
 const CUSTOM_EMOJIS_COUNT = 100;
 const EMOJI_SIZE_MIN = 1;
@@ -52,7 +53,7 @@ const CustomEmojiButton = memo(({ emoji, onClick, showCode }) => {
       onPointerEnter={addEdges}
       onFocus={addEdges}
     >
-      <picture>
+      {!emoji.unicode && (<picture>
         {!!emoji.staticUrl && (
           <source
             srcSet={emoji.staticUrl}
@@ -68,7 +69,8 @@ const CustomEmojiButton = memo(({ emoji, onClick, showCode }) => {
           loading="lazy"
           decoding="async"
         />
-      </picture>
+      </picture>)}
+      {emoji.unicode && (<span>{emoji.unicode}</span>)}
       {showCode && (
         <>
           {' '}
@@ -79,31 +81,32 @@ const CustomEmojiButton = memo(({ emoji, onClick, showCode }) => {
   );
 });
 
-const CustomEmojisList = memo(({ emojis, onSelect }) => {
-  const { i18n } = useLingui();
+const CustomEmojisList = memo(({ emojis, onSelect, category }) => {
+  const { i18n, t } = useLingui();
   const [max, setMax] = useState(CUSTOM_EMOJIS_COUNT);
   const showMore = emojis.length > max;
+
   return (
-    <section>
-      {emojis.slice(0, max).map((emoji) => (
-        <CustomEmojiButton
-          key={emoji.shortcode}
-          emoji={emoji}
-          onClick={() => {
-            onSelect(`:${emoji.shortcode}:`);
-          }}
-        />
-      ))}
-      {showMore && (
-        <button
-          type="button"
-          class="plain small"
-          onClick={() => setMax(max + CUSTOM_EMOJIS_COUNT)}
-        >
-          <Trans>{i18n.number(emojis.length - max)} more…</Trans>
-        </button>
-      )}
-    </section>
+      <div className='emoji-grid'>
+        {emojis.slice(0, max).map((emoji) => (
+          <CustomEmojiButton
+            key={emoji.shortcode}
+            emoji={emoji}
+            onClick={() => {
+              onSelect(emoji.unicode ? emoji.unicode : `:${emoji.shortcode}:`);
+            }}
+          />
+        ))}
+        {showMore && (
+          <button
+            type="button"
+            class="plain small"
+            onClick={() => setMax(max + CUSTOM_EMOJIS_COUNT)}
+          >
+            <Trans>{i18n.number(emojis.length - max)} more…</Trans>
+          </button>
+        )}
+      </div>
   );
 });
 
@@ -141,24 +144,29 @@ function CustomEmojisModal({
   }, []);
 
   const customEmojisCatList = useMemo(() => {
-    // Group emojis by category
-    const emojisCat = {
-      '--recent--': recentlyUsedCustomEmojis.filter((emoji) =>
-        customEmojis.find((e) => e.shortcode === emoji.shortcode),
-      ),
-    };
+    const emojisCat = {};
+    const recent = recentlyUsedCustomEmojis.filter((emoji) =>
+      customEmojis.find((e) => e.shortcode === emoji.shortcode),
+    );
+    if (recent.length) {
+      emojisCat['--recent--'] = recent;
+    }
+    const unicodeCat = {};
+    const customCat = {};
     const othersCat = [];
     customEmojis.forEach((emoji) => {
       customEmojisList.current?.push?.(emoji);
+      const targetCat = emoji.unicode ? unicodeCat : customCat;
       if (!emoji.category) {
         othersCat.push(emoji);
         return;
       }
-      if (!emojisCat[emoji.category]) {
-        emojisCat[emoji.category] = [];
+      if (!targetCat[emoji.category]) {
+        targetCat[emoji.category] = [];
       }
-      emojisCat[emoji.category].push(emoji);
+      targetCat[emoji.category].push(emoji);
     });
+    Object.assign(emojisCat, unicodeCat, customCat);
     if (othersCat.length) {
       emojisCat['--others--'] = othersCat;
     }
@@ -259,6 +267,21 @@ function CustomEmojisModal({
 
   const hasCustomEmojis = !!customEmojis?.length;
 
+  const defaultCats = {
+    '--recent--': t`Recently used`,
+    '--others--': t`Others`,
+    '--smileys-emotion--': t`Smileys`,
+    '--people-body--': t`People & Body`,
+    '--component--': t`Components`,
+    '--animals-nature--': t`Animals & Nature`,
+    '--food-drink--': t`Food & Drink`,
+    '--travel-places--': t`Travel & Places`,
+    '--activities--': t`Activities`,
+    '--objects--': t`Objects`,
+    '--symbols--': t`Symbols`,
+    '--flags--': t`Flags`
+  }
+
   return (
     <div
       id="custom-emojis-sheet"
@@ -289,7 +312,7 @@ function CustomEmojisModal({
               e.preventDefault();
               const emoji = matches[0];
               if (emoji) {
-                onSelectEmoji(`:${emoji.shortcode}:`);
+                onSelectEmoji(emoji.unicode ? emoji.unicode : `:${emoji.shortcode}:`);
               }
             }}
           >
@@ -319,7 +342,7 @@ function CustomEmojisModal({
                     <CustomEmojiButton
                       emoji={emoji}
                       onClick={() => {
-                        onSelectEmoji(`:${emoji.shortcode}:`);
+                        onSelectEmoji(emoji.unicode ? emoji.unicode : `:${emoji.shortcode}:`);
                       }}
                       showCode
                     />
@@ -339,18 +362,19 @@ function CustomEmojisModal({
                   Object.entries(customEmojisCatList).map(
                     ([category, emojis]) =>
                       !!emojis?.length && (
-                        <div class="section-container">
-                          <div class="section-header">
-                            {{
-                              '--recent--': t`Recently used`,
-                              '--others--': t`Others`,
-                            }[category] || category}
-                          </div>
+                        <details class="section-container">
+                          <summary className="section-header">
+                            {(emojis) && (
+                              !emojis[0].unicode ?
+                              <CustomEmoji url={emojis[0].url} staticUrl={emojis[0].staticUrl} alt={emojis[0].shortcode}/> :
+                              <span>{emojis[0].unicode}</span>
+                            )} {defaultCats[category] || category}
+                          </summary>
                           <CustomEmojisList
                             emojis={emojis}
                             onSelect={onSelectEmoji}
                           />
-                        </div>
+                        </details>
                       ),
                   )}
               </div>

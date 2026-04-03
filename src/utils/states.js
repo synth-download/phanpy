@@ -9,10 +9,19 @@ import rateLimit from './ratelimit';
 import store from './store';
 import unfurlMastodonLink from './unfurl-link';
 
+// Restore prevLocation from sessionStorage for page reload persistence
+function restorePrevLocation() {
+  const saved = store.session.getJSON('prevLocation');
+  if (saved && saved.pathname) {
+    return saved;
+  }
+  return null;
+}
+
 const states = proxy({
   appVersion: {},
   // history: [],
-  prevLocation: null,
+  prevLocation: restorePrevLocation(),
   currentLocation: null,
   statuses: {},
   statusThreadNumber: {},
@@ -193,6 +202,81 @@ export function getStatus(statusID, instance) {
   return states.statuses[statusID];
 }
 
+function saveStatusInternal(status, instance, oldStatus) {
+  let key = statusKey(status.id, instance);
+  if (oldStatus?._pinned) status._pinned = oldStatus._pinned;
+  // if (oldStatus?._filtered) status._filtered = oldStatus._filtered;
+  states.statuses[key] = status;
+  if (status.reblog?.id) {
+    const srKey = statusKey(status.reblog.id, instance);
+    states.statuses[srKey] = status.reblog;
+    // Re-assign key to the actual status
+    key = srKey;
+  }
+  const theQuote = status.reblog?.quote || status.quote;
+  if (theQuote?.id) {
+    const { id } = theQuote;
+    const sKey = statusKey(id, instance);
+    states.statuses[sKey] = theQuote;
+    const selfURL = `/${instance}/s/${id}`;
+    states.statusQuotes[key] = [
+      {
+        id,
+        instance,
+        url: selfURL,
+        native: true,
+      },
+    ];
+  }
+  // Mastodon native quotes
+  if (theQuote?.state) {
+    const { quotedStatus, state } = theQuote;
+    if (quotedStatus?.id) {
+      const { id, account } = quotedStatus;
+      const selfURL = `/${instance}/s/${id}`;
+      const sKey = statusKey(id, instance);
+      states.statuses[sKey] = quotedStatus;
+      states.statusQuotes[key] = [
+        {
+          id,
+          instance,
+          url: selfURL,
+          state,
+          account,
+          native: true,
+        },
+      ];
+    } else {
+      // Possibly "revoked"
+      states.statusQuotes[key] = [
+        {
+          // There's not much info here
+          state,
+          native: true,
+        },
+      ];
+    }
+  }
+}
+
+const pendingStatusSaves = [];
+let saveStatusFlushScheduled = false;
+
+function flushPendingStatusSaves() {
+  saveStatusFlushScheduled = false;
+  const saves = pendingStatusSaves.splice(0);
+  for (const { status, instance, oldStatus } of saves) {
+    saveStatusInternal(status, instance, oldStatus);
+  }
+}
+
+function queueSaveStatus(status, instance, oldStatus) {
+  pendingStatusSaves.push({ status, instance, oldStatus });
+  if (saveStatusFlushScheduled) return;
+  saveStatusFlushScheduled = true;
+  queueMicrotask(flushPendingStatusSaves);
+}
+
 export function saveStatus(status, instance, opts) {
   if (typeof instance === 'object') {
     opts = instance;
@@ -202,67 +286,18 @@ export function saveStatus(status, instance, opts) {
     override = true,
     skipThreading = false,
     skipUnfurling = false,
+    sync = false,
   } = opts || {};
   if (!status) return;
   const oldStatus = getStatus(status.id, instance);
   if (!override && oldStatus) return;
   if (deepEqual(status, oldStatus)) return;
-  queueMicrotask(() => {
-    let key = statusKey(status.id, instance);
-    if (oldStatus?._pinned) status._pinned = oldStatus._pinned;
-    // if (oldStatus?._filtered) status._filtered = oldStatus._filtered;
-    states.statuses[key] = status;
-    if (status.reblog?.id) {
-      const srKey = statusKey(status.reblog.id, instance);
-      states.statuses[srKey] = status.reblog;
-      // Re-assign key to the actual status
-      key = srKey;
-    }
-    const theQuote = status.reblog?.quote || status.quote;
-    if (theQuote?.id) {
-      const { id } = theQuote;
-      const sKey = statusKey(id, instance);
-      states.statuses[sKey] = theQuote;
-      const selfURL = `/${instance}/s/${id}`;
-      states.statusQuotes[key] = [
-        {
-          id,
-          instance,
-          url: selfURL,
-          native: true,
-        },
-      ];
-    }
-    // Mastodon native quotes
-    if (theQuote?.state) {
-      const { quotedStatus, state } = theQuote;
-      if (quotedStatus?.id) {
-        const { id, account } = quotedStatus;
-        const selfURL = `/${instance}/s/${id}`;
-        const sKey = statusKey(id, instance);
-        states.statuses[sKey] = quotedStatus;
-        states.statusQuotes[key] = [
-          {
-            id,
-            instance,
-            url: selfURL,
-            state,
-            account,
-            native: true,
-          },
-        ];
-      } else {
-        // Possibly "revoked"
-        states.statusQuotes[key] = [
-          {
-            // There's not much info here
-            state,
-            native: true,
-          },
-        ];
-      }
-    }
-  });
+
+  if (sync) {
+    saveStatusInternal(status, instance, oldStatus);
+  } else {
+    queueSaveStatus(status, instance, oldStatus);
+  }
 
   // THREAD TRAVERSER
   if (!skipThreading) {
