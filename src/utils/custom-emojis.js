@@ -3,6 +3,7 @@ import utfData from 'emojibase-data/en/compact.json';
 import utfShortcodes from 'emojibase-data/en/shortcodes/github.json'
 import utfGroups from 'emojibase-data/meta/groups.json';
 
+import { api } from './api';
 import pmem from './pmem';
 
 function remapEmojiData() {
@@ -24,7 +25,27 @@ function remapEmojiData() {
 
 const UNICODE_EMOJIS = remapEmojiData();
 
-async function _getCustomEmojis(instance, masto) {
+function remapEmojiData() {
+  const remapped = utfData.map(emoji => {
+    const shortcodes = utfShortcodes[emoji.hexcode]
+    return {
+      shortcode: Array.isArray(shortcodes) ? shortcodes[0] : shortcodes,
+      unicode: emoji.unicode,
+      url: null,
+      static_url: null,
+      visible_in_picker: true,
+      category: emoji.group != undefined ? `--${utfGroups.groups[emoji.group]}--` : null,
+      __group: emoji.group
+    };
+  });
+  remapped.sort((a, b) => (a.__group ?? Infinity) - (b.__group ?? Infinity));
+  return remapped;
+}
+
+const UNICODE_EMOJIS = remapEmojiData();
+
+async function _getCustomEmojis(instance) {
+  const { masto } = api({ instance });
   const emojis = await masto.v1.customEmojis.list();
   const visibleEmojis = emojis.filter((e) => e.visibleInPicker);
 
@@ -39,9 +60,6 @@ async function _getCustomEmojis(instance, masto) {
 
 const getCustomEmojis = pmem(_getCustomEmojis, {
   // Limit by time to reduce memory usage
-  // Cached by instance
-  isKeyItemEqual: (cacheKeyArg, keyArg) =>
-    cacheKeyArg.instance === keyArg.instance,
   expires: 30 * 60 * 1000, // 30 minutes
 });
 
