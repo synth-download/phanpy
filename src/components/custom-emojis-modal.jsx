@@ -45,7 +45,7 @@ const CustomEmojiButton = memo(({ emoji, onSelect, showCode }) => {
   };
 
   const handleClick = useCallback(() => {
-    onSelect(`:${emoji.shortcode}:`);
+    onSelect(emoji.unicode ? emoji.unicode : `:${emoji.shortcode}:`);
   }, [onSelect, emoji.shortcode]);
 
   return (
@@ -85,20 +85,17 @@ const CustomEmojiButton = memo(({ emoji, onSelect, showCode }) => {
   );
 });
 
-const CustomEmojisList = memo(({ emojis, onSelect, category }) => {
-  const { i18n, t } = useLingui();
+const CustomEmojisList = memo(({ emojis, onSelect }) => {
+  const { i18n } = useLingui();
   const [max, setMax] = useState(CUSTOM_EMOJIS_COUNT);
   const showMore = emojis.length > max;
-
   return (
     <section className='emoji-grid'>
       {emojis.slice(0, max).map((emoji) => (
         <CustomEmojiButton
           key={emoji.shortcode}
           emoji={emoji}
-          onSelect={() => {
-            onSelect(emoji.unicode ? emoji.unicode : `:${emoji.shortcode}:`);
-          }}
+          onSelect={onSelect}
         />
       ))}
       {showMore && (
@@ -372,9 +369,7 @@ function CustomEmojisModal({
                   <li key={emoji.shortcode} class="custom-emojis-match">
                     <CustomEmojiButton
                       emoji={emoji}
-                      onClick={() => {
-                        onSelectEmoji(emoji.unicode ? emoji.unicode : `:${emoji.shortcode}:`);
-                      }}
+                      onSelect={onSelectEmoji}
                       showCode
                     />
                   </li>
