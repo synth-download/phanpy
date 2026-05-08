@@ -176,9 +176,6 @@ function CustomEmojisModal({
     if (othersCat.length) {
       emojisCat['--others--'] = othersCat;
     }
-    for (const [category, list] of categoryMap) {
-      emojisCat[category] = list;
-    }
     return emojisCat;
   }, [customEmojis]);
 

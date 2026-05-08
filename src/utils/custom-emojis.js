@@ -25,25 +25,6 @@ function remapEmojiData() {
 
 const UNICODE_EMOJIS = remapEmojiData();
 
-function remapEmojiData() {
-  const remapped = utfData.map(emoji => {
-    const shortcodes = utfShortcodes[emoji.hexcode]
-    return {
-      shortcode: Array.isArray(shortcodes) ? shortcodes[0] : shortcodes,
-      unicode: emoji.unicode,
-      url: null,
-      static_url: null,
-      visible_in_picker: true,
-      category: emoji.group != undefined ? `--${utfGroups.groups[emoji.group]}--` : null,
-      __group: emoji.group
-    };
-  });
-  remapped.sort((a, b) => (a.__group ?? Infinity) - (b.__group ?? Infinity));
-  return remapped;
-}
-
-const UNICODE_EMOJIS = remapEmojiData();
-
 async function _getCustomEmojis(instance) {
   const { masto } = api({ instance });
   const emojis = await masto.v1.customEmojis.list();
